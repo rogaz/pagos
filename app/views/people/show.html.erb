@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @person.name %>
+</p>
+
+<% unless @person.student.nil? %>
+<p>
+  <b>Grado:</b>
+  <%= @person.student.category.name %>
+  $<%= @person.student.cost %>.00
+</p>
+<% end %>
+
+<% unless @person.patient.nil? %>
+<p>
+  <b><%= @person.patient.category.name %></b>
+  $<%= @person.patient.cost %>.00
+</p>
+<% end %>
+
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>

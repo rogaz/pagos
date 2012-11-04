@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Amount:</b>
+  <%= @patient_charge.amount %>
+</p>
+
+<p>
+  <b>Liquidated:</b>
+  <%= @patient_charge.liquidated %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @patient_charge.description %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @patient_charge.date %>
+</p>
+
+<p>
+  <b>Patient:</b>
+  <%= @patient_charge.patient_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_patient_charge_path(@patient_charge) %> |
+<%= link_to 'Back', patient_charges_path %>

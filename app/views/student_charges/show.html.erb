@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Amount:</b>
+  <%= @student_charge.amount %>
+</p>
+
+<p>
+  <b>Liquidated:</b>
+  <%= @student_charge.liquidated %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @student_charge.description %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @student_charge.date %>
+</p>
+
+<p>
+  <b>Student:</b>
+  <%= @student_charge.student_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_student_charge_path(@student_charge) %> |
+<%= link_to 'Back', student_charges_path %>

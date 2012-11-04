@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pagos</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <header class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <nav>
+        <ul class="nav pull-right" id="barra-superior">
+          <li><%= link_to 'Categorias', categories_path %></li>
+          <li><%= link_to 'Personas', people_path %></li>
+          <li><%= link_to 'Estudiante', students_path %></li>
+          <li><%= link_to 'Pacientes', patients_path %></li>
+          <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
+          <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  </header>
+
+  <% flash.each do |name, msg| %>
+    <% if msg.is_a?(String) %>
+      <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+        <a class="close" data-dismiss="alert">&#215;</a>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="content">
+    <%= yield %>
+  </div>
+</body>
+</html>

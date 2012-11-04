@@ -1,0 +1,48 @@
+<%= form_for(@patient_charge) do |f| %>
+  <% if @patient_charge.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@patient_charge.errors.count, "error") %> prohibited this patient_charge from being saved:</h2>
+
+      <ul>
+      <% @patient_charge.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<!--
+  <div class="field">
+    <%= f.label :amount %><br />
+    <%= f.number_field :amount %>
+  </div>
+-->
+<!--
+  <div class="field">
+    <%= f.label :liquidated %><br />
+    <%= f.text_field :liquidated %>
+  </div>
+-->
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.select(:description, @horarios) %>
+  </div>
+
+    <%= f.hidden_field :patient_id, :value => @patient.id %>
+<!--
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.datetime_select :date %>
+  </div>
+-->
+<!--
+  <div class="field">
+    <%= f.label :patient_id %><br />
+    <%= f.number_field :patient_id %>
+  </div>
+-->
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

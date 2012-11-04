@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  amount: 1
+  liquidated: MyString
+  description: MyString
+  date: 2012-11-03 14:15:43
+  student_id: 1
+
+two:
+  amount: 1
+  liquidated: MyString
+  description: MyString
+  date: 2012-11-03 14:15:43
+  student_id: 1

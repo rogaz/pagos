@@ -1,0 +1,2 @@
+module PatientChargesHelper
+end

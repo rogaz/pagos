@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Person:</b>
+  <%= @patient.person.name %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @patient.category.name %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%= @patient.cost %>
+</p>
+
+
+<%= link_to 'Edit', edit_patient_path(@patient) %> |
+<%= link_to 'Back', patients_path %>

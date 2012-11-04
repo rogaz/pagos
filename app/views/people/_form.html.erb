@@ -1,0 +1,100 @@
+<script type="text/javascript" >
+  $(document).ready(function(){
+    if($('#escuela').is(':checked')){
+      $("#escuela_cost").removeAttr('disabled');
+      $("#category_id").removeAttr('disabled');
+    } else{
+      $("#escuela_cost").attr('disabled', 'disabled');
+      $("#category_id").attr('disabled', 'disabled');
+    }
+    if($('#cenaac').is(':checked'))
+      $("#cenaac_cost").removeAttr('disabled');
+     else
+      $("#cenaac_cost").attr('disabled', 'disabled');
+
+    $("#escuela").click(function(){
+      if($('#escuela').is(':checked')){
+        $("#escuela_cost").removeAttr('disabled');
+        $("#category_id").removeAttr('disabled');
+      } else{
+        $("#escuela_cost").attr('disabled', 'disabled');
+        $("#category_id").attr('disabled', 'disabled');
+      }
+    });
+    $("#cenaac").click(function(){
+      if($('#cenaac').is(':checked'))
+        $("#cenaac_cost").removeAttr('disabled');
+      else
+        $("#cenaac_cost").attr('disabled', 'disabled');
+    });
+  });
+</script>
+<%= form_for @person, :class => "form-horizontal" do |f| %>
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => "control-label" %>
+    <div class="controls"><%= f.text_field :name %></div>
+  </div>
+  <% if @person.student.nil? %>
+  <div class="control-group">
+    <%= label_tag "escuela", "Escuela", :class => "control-label" %>
+    <div class="controls"><%= check_box_tag "escuela", "true" %></div>
+  </div>
+  <div class="control-group">
+    <%= label_tag "categoria", "Categoria", :class => "control-label" %>
+    <div class="controls"><%= select(:category, :id, Category.find(:all, :conditions => ["name != 'CENAAC'"]).collect {|s| [s.name, s.id]}, {:prompt => "Seleccione categoria"}) %></div>
+  </div>
+  <div class="control-group">
+    <%= label_tag "escuela_cost", "Costo de Colegiatura", :class => "control-label" %>
+    <div class="controls"><%= number_field_tag "escuela_cost", 2000 %></div>
+  </div>
+  <% else %>
+  <div class="control-group">
+    <%= label_tag "escuela", "Escuela", :class => "control-label" %>
+    <div class="controls"><%= check_box_tag "escuela", "true", :checked => true  %></div>
+  </div>
+  <div class="control-group">
+    <%= label_tag "categoria", "Categoria", :class => "control-label" %>
+    <div class="controls"><%= select(:category, :id, Category.find(:all, :conditions => ["name != 'CENAAC'"]).collect {|s| [s.name, s.id]}, {:selected => @person.student.category_id}) %></div>
+  </div>
+  <div class="control-group">
+    <%= label_tag "escuela_cost", "Costo de Colegiatura", :class => "control-label" %>
+    <div class="controls"><%= number_field_tag "escuela_cost", @person.student.cost %></div>
+  </div>
+  <% end %>
+
+  <% if @person.patient.nil? %>
+  <div class="control-group">
+    <%= label_tag "cenaac", "CENAAC", :class => "control-label" %>
+    <div class="controls"><%= check_box_tag "cenaac", "true" %></div>
+  </div>
+  <div class="control-group">
+    <%= label_tag "cenaac_cost", "Costo de Sesion", :class => "control-label" %><br />
+    <div class="controls"><%= number_field_tag "cenaac_cost", 200 %></div>
+  </div>
+  <% else %>
+  <div class="control-group">
+    <%= label_tag "cenaac", "CENAAC", :class => "control-label" %>
+    <div class="controls"><%= check_box_tag "cenaac", "true", :checked => true %></div>
+  </div>
+  <div class="control-group">
+    <%= label_tag "cenaac_cost", "Costo de Sesion", :class => "control-label" %>
+    <div class="controls"><%= number_field_tag "cenaac_cost", @person.patient.cost %></div>
+  </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit :class => "btn" %>
+  </div>
+<% end %>

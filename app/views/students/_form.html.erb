@@ -1,0 +1,93 @@
+<script type="text/javascript" >
+  $(document).ready(function(){
+    //$("#cenaac_cost").attr('disabled', 'disabled');
+    //$("#cenaac").attr('checked', false);
+    if($('#cenaac').is(':checked')){
+      $("#cenaac_cost").removeAttr('disabled');
+      cost = true;
+    } else {
+      $("#cenaac_cost").attr('disabled', 'disabled');
+      cost = false;
+    }
+    $("#cenaac").click(function(){
+      if (cost == true){
+        $("#cenaac_cost").attr('disabled', 'disabled');
+        cost = false;
+      } else {
+        $("#cenaac_cost").removeAttr('disabled');
+        //$("#cenaac").attr('checked', true);
+        cost = true;
+      }
+    });
+  });
+</script>
+<%= form_for(@student) do |f| %>
+  <% if @student.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
+
+      <ul>
+      <% @student.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.fields_for :person, @student.person do |form_person| %><br />
+      <% if @student.person.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@student.person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+          <ul>
+          <% @student.person.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="field">
+        <%= form_person.label :name %><br />
+        <%= form_person.text_field :name %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :category_id %><br />
+    <%= f.collection_select(:category_id, Category.find(:all, :conditions => ["name != 'CENAAC'"]), :id, :name, :prompt => true)  %>
+  </div>
+
+  <div class="field">
+    <%= f.label :cost %><br />
+    <%= f.number_field :cost %>
+  </div>
+
+  <% if params[:action] == 'edit' and @patient %>
+  <div class="field">
+    <%= label_tag "CENAAC" %><br />
+    <%= check_box_tag "cenaac", "true", :checked => true  %>
+  </div>
+  <% else %>
+  <div class="field">
+    <%= label_tag "CENAAC" %><br />
+    <%= check_box_tag "cenaac", "true" %>
+  </div>
+  <% end %>
+  <div class="field">
+    <%= label_tag "Cost" %><br />
+    <% if @student.person.patient.nil? %>
+    <%= number_field_tag "cenaac_cost", 200 %>
+    <% else %>
+    <%= number_field_tag "cenaac_cost", @student.person.patient.cost %>
+    <%end%>
+  </div>
+
+  
+  
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

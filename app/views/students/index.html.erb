@@ -1,0 +1,21 @@
+<h1>Listing students</h1>
+
+<table class="table table-striped table-bordered table-condensed">
+  <tr>
+    <th>Person</th>
+    <th>Category</th>
+    <th>Cost</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @students.each do |student| %>
+  <tr>
+    <td><%= student.person.name %></td>
+    <td><%= student.category.name %></td>
+    <td><%= student.cost %></td>
+    <td><%= link_to 'Show', student %></td>
+    <td><%= link_to 'Edit', edit_student_path(student) %></td>
+  </tr>
+<% end %>
+</table>
