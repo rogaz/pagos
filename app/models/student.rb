@@ -23,6 +23,7 @@ class Student < ActiveRecord::Base
       @student_charge.description = "Proporcional de Colegiatura #{Time.now.month} #{Time.now.year}"
       @student_charge.date = Time.now-7.hour
       @student_charge.student_id = self.id
+      @student_charge.surcharge = false
       @student_charge.save
     end
     

@@ -7,6 +7,10 @@
     <th>Cost</th>
     <th>CENAAC</th>
     <th>Cost</th>
+    <% fecha_actual = Time.now-7.hour %>
+    <% if fecha_actual.day > 5 %>
+    <th>Aplicar Recargo</th>
+    <% end %>
     <th></th>
     <th></th>
     <th></th>
@@ -16,14 +20,28 @@
   <tr>
     <td><%= person.name %></td>
     <td><%= person.student.nil? ? "" : person.student.category.name %></td>
-    <td><%= person.student.nil? ? "" : person.student.cost %></td>
-    <td><% if person.patient.nil? %>
-      <% "" %>
-      <% else %>
-      <i class="icon-ok"></i>
-      <% end %>
+    <td><%= person.student.nil? ? "" : "$#{person.student.cost}.00" %></td>
+    <td><% unless  person.patient.nil? %>
+        <i class="icon-ok"></i>
+        <% end %>
     </td>
-    <td><%= person.patient.nil? ? "" : person.patient.cost %></td>
+    <td><%= person.patient.nil? ? "" : "$#{person.patient.cost}.00" %></td>
+    <% if fecha_actual.day > 5 %>
+    <% unless person.student.nil? %>
+      <% cargo = person.student.student_charges.where('extract(month from date) = ?', fecha_actual.month).first %>
+      <% unless cargo.nil? %>
+        <% if cargo.liquidated ==  "no" %>
+          <td><%= link_to 'Aplicar', "#" %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+      <% else %>
+        <td></td>
+      <% end %>
+    <% else %>
+        <td></td>
+    <% end %>
+    <% end %>
     <td><%= link_to 'Show', person %></td>
     
     <td><%= link_to 'Edit', edit_person_path(person) %></td>
@@ -38,4 +56,4 @@
 
 <br />
 
-<%= link_to 'New Person', new_person_path %><br/>
+<%= link_to 'Persona Nueva', new_person_path, :class => "btn btn-info" %><br/>

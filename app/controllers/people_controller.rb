@@ -75,7 +75,7 @@ class PeopleController < ApplicationController
           @patient.category_id = category.id
           @patient.save
         end
-        flash[:success] = 'Persona guardada correctamente.'
+        flash[:notice] = 'Persona guardada correctamente.'
         format.html { redirect_to @person }
         format.json { render json: @person, status: :created, location: @person }
       else
@@ -146,7 +146,7 @@ class PeopleController < ApplicationController
       end
     else
       if @person.patient.nil?
-        correct_cenaac_cost = false if params[:cenaac_cost] == ""
+        correct_cenaac_cost = false if !params[:cenaac_cost][/(^[\d]+$)/]
         if correct_cenaac_cost
           @patient = Patient.new
           @patient.person_id = @person.id
@@ -156,7 +156,7 @@ class PeopleController < ApplicationController
           @patient.save
         end
       else
-        correct_cenaac_cost = false if params[:cenaac_cost] == ""
+        correct_cenaac_cost = false if !params[:cenaac_cost][/(^[\d]+$)/]
         if correct_cenaac_cost
           @patient = Patient.find_by_person_id @person.id
           @patient.cost = params[:cenaac_cost]
@@ -170,7 +170,7 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if escuelaocenaac and categoria_seleccionada and correct_esc_cost and correct_cenaac_cost and !student_tiene_cargos and !patient_tiene_cargos
         @person.update_attributes(params[:person])
-        flash[:success] = 'Persona correctamente actualizada'
+        flash[:notice] = 'Persona correctamente actualizada'
         format.html { redirect_to @person }#people_path }
         format.json { head :no_content }
       else

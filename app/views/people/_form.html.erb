@@ -43,7 +43,7 @@
   <% end %>
 
   <div class="control-group">
-    <%= f.label :name, :class => "control-label" %>
+    <%= f.label "Nombre", :class => "control-label" %>
     <div class="controls"><%= f.text_field :name %></div>
   </div>
   <% if @person.student.nil? %>
@@ -95,6 +95,6 @@
   <% end %>
 
   <div class="actions">
-    <%= f.submit :class => "btn" %>
+    <%= f.submit "Guardar", :class => "btn" %>
   </div>
 <% end %>
