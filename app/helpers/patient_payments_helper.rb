@@ -1,0 +1,2 @@
+module PatientPaymentsHelper
+end

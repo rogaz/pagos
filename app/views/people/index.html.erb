@@ -1,12 +1,12 @@
-<h1>Listing people</h1>
+<h1>Lista de Personas</h1>
 
 <table class="table table-striped table-bordered table-condensed">
   <tr>
     <th>Nombre</th>
-    <th>Category</th>
-    <th>Cost</th>
+    <th>Categoria</th>
+    <th>Costo</th>
     <th>CENAAC</th>
-    <th>Cost</th>
+    <th>Costo</th>
     <% fecha_actual = Time.now-7.hour %>
     <% if fecha_actual.day > 5 %>
     <th>Aplicar Recargo</th>
@@ -42,13 +42,9 @@
         <td></td>
     <% end %>
     <% end %>
-    <td><%= link_to 'Show', person %></td>
-    
-    <td><%= link_to 'Edit', edit_person_path(person) %></td>
-    
-    
-    
-    <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Detalles', person %></td>
+    <td><%= link_to 'Editar', edit_person_path(person) %></td>
+    <td><%= link_to 'Eliminar', person, method: :delete, data: { confirm: '¿Esta seguro que quiere eliminar a esta persona?' } %></td>
 
   </tr>
 <% end %>

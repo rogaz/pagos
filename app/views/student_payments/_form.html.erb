@@ -1,0 +1,29 @@
+<%= form_for(@student_payment) do |f| %>
+  <% if @student_payment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@student_payment.errors.count, "error") %> prohibited this student_payment from being saved:</h2>
+
+      <ul>
+      <% @student_payment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :amount %><br />
+    <%= f.number_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.datetime_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :student_charge_id %><br />
+    <%= f.number_field :student_charge_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

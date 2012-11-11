@@ -1,10 +1,10 @@
-<%= form_for(@payment) do |f| %>
-  <% if @payment.errors.any? %>
+<%= form_for(@patient_payment) do |f| %>
+  <% if @patient_payment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+      <h2><%= pluralize(@patient_payment.errors.count, "error") %> prohibited this patient_payment from being saved:</h2>
 
       <ul>
-      <% @payment.errors.full_messages.each do |msg| %>
+      <% @patient_payment.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -20,8 +20,8 @@
     <%= f.datetime_select :date %>
   </div>
   <div class="field">
-    <%= f.label :charge_id %><br />
-    <%= f.number_field :charge_id %>
+    <%= f.label :patient_charge_id %><br />
+    <%= f.number_field :patient_charge_id %>
   </div>
   <div class="actions">
     <%= f.submit %>

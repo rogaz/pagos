@@ -1,11 +1,13 @@
 Pagos::Application.routes.draw do
+  resources :student_payments
+
+  resources :patient_payments
+
   root :to => "Categories#index"
 
   resources :patient_charges
 
   resources :student_charges
-
-  resources :payments
 
   resources :patients
 

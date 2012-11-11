@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121106145942) do
+ActiveRecord::Schema.define(:version => 20121111172240) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -30,20 +30,20 @@ ActiveRecord::Schema.define(:version => 20121106145942) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "patient_payments", :force => true do |t|
+    t.integer  "amount"
+    t.datetime "date"
+    t.integer  "patient_charge_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
   create_table "patients", :force => true do |t|
     t.integer  "person_id"
     t.integer  "category_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "cost"
-  end
-
-  create_table "payments", :force => true do |t|
-    t.integer  "amount"
-    t.datetime "date"
-    t.integer  "charge_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "people", :force => true do |t|
@@ -61,6 +61,14 @@ ActiveRecord::Schema.define(:version => 20121106145942) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.boolean  "surcharge"
+  end
+
+  create_table "student_payments", :force => true do |t|
+    t.integer  "amount"
+    t.datetime "date"
+    t.integer  "student_charge_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "students", :force => true do |t|
