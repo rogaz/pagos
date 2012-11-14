@@ -10,16 +10,14 @@
   <header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <nav>
-        <ul class="nav pull-right" id="barra-superior">
-          <li><%= link_to 'Categorias', categories_path %></li>
-          <li><%= link_to 'Personas', people_path %></li>
-          <li><%= link_to 'Estudiante', students_path %></li>
-          <li><%= link_to 'Pacientes', patients_path %></li>
-          <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
-          <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
-        </ul>
-      </nav>
+      <ul class="nav pull-right">
+        <li><%= link_to 'Categorias', categories_path %></li>
+        <li><%= link_to 'Personas', people_path %></li>
+        <li><%= link_to 'Estudiantes', students_path %></li>
+        <li><%= link_to 'Pacientes', patients_path %></li>
+        <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
+        <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
+      </ul>
     </div>
   </div>
   </header>
@@ -32,8 +30,28 @@
       </div>
     <% end %>
   <% end %>
-  <div class="content">
-    <%= yield %>
+  <div class="container-fluid fill">
+    <div class="row-fluid">
+      <div class="span3">
+        <div class="well sidebar-nav">
+          <ul class="nav nav-list">
+            <li><%= link_to 'Categorias', categories_path %></li>
+            <li><%= link_to 'Personas', people_path %></li>
+            <li class="nav-header">Escuela</li>
+            <li><%= link_to 'Estudiantes', students_path %></li>
+            <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
+            <li><%= link_to 'Pagos de Escuela', student_payments_path %></li>
+            <li class="nav-header">CENAAC</li>
+            <li><%= link_to 'Pacientes', patients_path %></li>
+            <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
+            <li><%= link_to 'Pagos de CENAAC', patient_payments_path %></li>
+          </ul>
+        </div>
+      </div>
+      <div class="span9">
+        <%= yield %>
+      </div>
+    </div>
   </div>
 </body>
 </html>

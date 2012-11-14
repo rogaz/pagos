@@ -1,13 +1,13 @@
-<h1>Listing patient_charges</h1>
+<h1>Lista de Cargos de Pacientes</h1>
 
 <table class="table table-striped table-bordered table-condensed">
   <tr>
-    <th>Amount</th>
-    <th>Liquidated</th>
+    <th>Cantidad</th>
+    <th>Liquidado</th>
     <th>Descripción</th>
-    <th>Date</th>
+    <th>Fecha</th>
     <th>Patient_ID</th>
-    <th>Patient</th>
+    <th>Paciente</th>
     <th></th>
     <th></th>
     <th></th>
@@ -18,12 +18,12 @@
     <td><%= patient_charge.amount %></td>
     <td><%= patient_charge.liquidated %></td>
     <td><%= patient_charge.description %></td>
-    <td><%= patient_charge.date %></td>
+    <td><%= patient_charge.date.strftime("%Y-%m-%d %H:%M") %></td>
     <td><%= patient_charge.patient_id %></td>
     <td><%= patient_charge.patient.person.name %></td>
-    <td><%= link_to 'Show', patient_charge %></td>
-    <td><%= link_to 'Edit', edit_patient_charge_path(patient_charge) %></td>
-    <td><%= link_to 'Destroy', patient_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Detalles', patient_charge %></td>
+    <td><%= link_to 'Editar', edit_patient_charge_path(patient_charge) %></td>
+    <td><%= link_to 'Eliminar', patient_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

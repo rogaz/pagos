@@ -1,25 +1,26 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @person.name %>
-</p>
+<div class="form-signin">
+<table class="table table-striped table-bordered table-condensed lead">
+<tr>
+  <th>Nombre</th>
+  <td><%= @person.name %></td>
+</tr>
 
 <% unless @person.student.nil? %>
-<p>
-  <b>Grado:</b>
-  <%= @person.student.category.name %>
-  $<%= @person.student.cost %>.00
-</p>
+<tr>
+  <th>Grado</th>
+  <td><%= @person.student.category.name %> $<%= @person.student.cost %>.00</td>
+</tr>
 <% end %>
 
 <% unless @person.patient.nil? %>
-<p>
-  <b><%= @person.patient.category.name %></b>
-  $<%= @person.patient.cost %>.00
-</p>
+<tr>
+  <th><%= @person.patient.category.name %></th>
+  <td>$<%= @person.patient.cost %>.00</td>
+</tr>
 <% end %>
 
-
-<%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %>
+</table>
+<%= link_to 'Editar', edit_person_path(@person), :class => "btn btn-large" %>
+<%= link_to 'Ver todas las personas', people_path, :class => "btn btn-large" %>
+</div>

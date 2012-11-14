@@ -16,7 +16,6 @@ class PatientChargesController < ApplicationController
           end
         end
       end
-      
     end
 
     respond_to do |format|
@@ -29,6 +28,8 @@ class PatientChargesController < ApplicationController
   # GET /patient_charges/1.json
   def show
     @patient_charge = PatientCharge.find(params[:id])
+    @patient_payments = @patient_charge.patient_payments
+    @patient_payment = PatientPayment.new
 
     respond_to do |format|
       format.html # show.html.erb
@@ -106,11 +107,18 @@ class PatientChargesController < ApplicationController
   # DELETE /patient_charges/1.json
   def destroy
     @patient_charge = PatientCharge.find(params[:id])
-    @patient_charge.destroy
-
+    @patient_charge.patient_payments.empty? ? charge_has_payments = false : charge_has_payments = true
+    
     respond_to do |format|
-      format.html { redirect_to patient_charges_url }
-      format.json { head :no_content }
+      if !charge_has_payments
+        @patient_charge.destroy
+        format.html { redirect_to people_charges_url(@patient_charge.patient.person) }
+        format.json { head :no_content }
+      else
+        flash[:error] = "El cargo tiene pagos"
+        format.html { redirect_to people_charges_url(@patient_charge.patient.person) }
+        format.json { head :no_content }
+      end
     end
   end
 end

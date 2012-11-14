@@ -15,6 +15,8 @@ Pagos::Application.routes.draw do
 
   resources :people
 
+  get "people/charges/:id" => "people#charges", :as => :people_charges
+
   resources :categories
 
   get "student_charges/to_pay/:category_id" => "student_charges#index", :as => :student_charges_to_pay

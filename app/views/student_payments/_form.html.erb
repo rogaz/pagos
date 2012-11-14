@@ -19,10 +19,9 @@
     <%= f.label :date %><br />
     <%= f.datetime_select :date %>
   </div>
-  <div class="field">
-    <%= f.label :student_charge_id %><br />
-    <%= f.number_field :student_charge_id %>
-  </div>
+  
+  <%= f.hidden_field :student_charge_id, value: params[:student_charge_id]  %>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

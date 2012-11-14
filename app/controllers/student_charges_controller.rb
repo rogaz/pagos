@@ -28,6 +28,8 @@ class StudentChargesController < ApplicationController
   # GET /student_charges/1.json
   def show
     @student_charge = StudentCharge.find(params[:id])
+    @student_payments = @student_charge.student_payments
+    @student_payment = StudentPayment.new
 
     respond_to do |format|
       format.html # show.html.erb
@@ -87,11 +89,18 @@ class StudentChargesController < ApplicationController
   # DELETE /student_charges/1.json
   def destroy
     @student_charge = StudentCharge.find(params[:id])
-    @student_charge.destroy
+    @student_charge.student_payments.empty? ? charge_has_payments = false : charge_has_payments = true
 
     respond_to do |format|
-      format.html { redirect_to student_charges_url }
-      format.json { head :no_content }
+      if !charge_has_payments
+        @student_charge.destroy
+        format.html { redirect_to people_charges_url(@student_charge.student.person) }
+        format.json { head :no_content }
+      else
+        flash[:error] = "El cargo tiene pagos"
+        format.html { redirect_to people_charges_url(@student_charge.student.person) }
+        format.json { head :no_content }
+      end
     end
   end
 

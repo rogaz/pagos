@@ -213,4 +213,19 @@ class PeopleController < ApplicationController
       end
     end
   end
+
+  def charges
+    @person = Person.find params[:id]
+    unless @person.student.nil?
+      @student = Person.find(params[:id]).student
+      @student_charges = @student.student_charges
+    end
+    unless @person.patient.nil?
+      @patient = Person.find(params[:id]).patient
+      @patient_charges = @patient.patient_charges
+    end
+  end
+
+
+
 end
