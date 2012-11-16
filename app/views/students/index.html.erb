@@ -4,9 +4,9 @@
   <tr>
     <th>Nombre</th>
     <th>Categoria</th>
-    <th>Costo</th>
-    <th></th>
-    <th></th>
+    <th>Costo de Colegiatura</th>
+    <!--<th></th>
+    <th></th>-->
   </tr>
 
 <% @students.each do |student| %>
@@ -14,8 +14,8 @@
     <td><%= student.person.name %></td>
     <td><%= student.category.name %></td>
     <td><%= student.cost %></td>
-    <td><%= link_to 'Detalles', student %></td>
-    <td><%= link_to 'Editar', edit_student_path(student) %></td>
+    <!--<td><%= link_to 'Detalles', student %></td>
+    <td><%= link_to 'Editar', edit_student_path(student) %></td>-->
   </tr>
 <% end %>
 </table>

@@ -207,8 +207,13 @@ class PeopleController < ApplicationController
         format.html { redirect_to people_url }
         format.json { head :no_content }
       else
-        flash[:notice] = "El estudiante #{@person.name} tiene cargos" if student_tiene_cargos
-        flash[:notice] = "El paciente '#{@person.name}' tiene cargos" if patient_tiene_cargos
+        if student_tiene_cargos and !patient_tiene_cargos
+          flash[:notice] = "La persona #{@person.name} tiene cargos de Colegiatura"
+        elsif !student_tiene_cargos and patient_tiene_cargos
+          flash[:notice] = "El persona #{@person.name} tiene cargos de Sesion"
+        elsif student_tiene_cargos and patient_tiene_cargos
+          flash[:notice] = "El persona #{@person.name} tiene cargos de Colegiatura y de Sesion"
+        end
         format.html { redirect_to people_url }
       end
     end

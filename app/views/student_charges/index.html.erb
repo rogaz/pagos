@@ -7,7 +7,6 @@
     <th>Liquidado</th>
     <th>Descripción</th>
     <th>Fecha</th>
-    <th>Student_ID</th>
     <th>Estudiante</th>
     <th></th>
     <th></th>
@@ -16,12 +15,11 @@
 
 <% @student_charges.each do |student_charge| %>
   <tr>
-    <td><%= student_charge.amount %></td>
+    <td>$<%= student_charge.amount %>.00</td>
     <td><%= student_charge.surcharge %></td>
-    <td><%= student_charge.liquidated %></td>
+    <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
     <td><%= student_charge.description %></td>
-    <td><%= student_charge.date.strftime("%Y-%m-%d %H:%M") %></td>
-    <td><%= student_charge.student_id %></td>
+    <td><%= date_with_format(student_charge.date) %></td>
     <td><%= student_charge.student.person.name %></td>
     <td><%= link_to 'Detalles', student_charge %></td>
     <td><%= link_to 'Editar', edit_student_charge_path(student_charge) %></td>
@@ -29,7 +27,3 @@
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Student charge', new_student_charge_path %>

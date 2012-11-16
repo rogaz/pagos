@@ -1,27 +1,19 @@
-<h1>Listing student_payments</h1>
+<h1>Lista de los pagos de Estudiantes</h1>
 
-<table>
+<table class="table table-striped table-bordered table-condensed">
   <tr>
-    <th>Amount</th>
-    <th>Date</th>
-    <th>Student charge</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Cantidad</th>
+    <th>Fecha</th>
+    <th>Cargo con Fecha</th>
+    <!--<th></th>-->
   </tr>
 
 <% @student_payments.each do |student_payment| %>
   <tr>
     <td><%= student_payment.amount %></td>
-    <td><%= student_payment.date %></td>
-    <td><%= student_payment.student_charge_id %></td>
-    <td><%= link_to 'Show', student_payment %></td>
-    <td><%= link_to 'Edit', edit_student_payment_path(student_payment) %></td>
-    <td><%= link_to 'Destroy', student_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= date_with_format(student_payment.date) %></td>
+    <td><%= student_payment.student_charge.student.person.name + "\n" + date_with_format(student_payment.student_charge.date).to_s %></td>
+    <!--<td><%= link_to 'Detalles', student_payment %></td>-->
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Student payment', new_student_payment_path %>

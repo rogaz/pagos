@@ -1,20 +1,23 @@
-<p id="notice"><%= notice %></p>
+<div class="row-fluid">
+<div class ="span5">
+  <h2><%= @student_payment.student_charge.student.person.name %></h2>
+<table class="table table-striped table-bordered table-condensed">
+<tr>
+  <th>Cantidad</th>
+  <td><%= @student_payment.amount %></td>
+</tr>
 
-<p>
-  <b>Amount:</b>
-  <%= @student_payment.amount %>
-</p>
+<tr>
+  <th>Fecha</th>
+  <td><%= date_with_format(@student_payment.date) %></td>
+</tr>
 
-<p>
-  <b>Date:</b>
-  <%= @student_payment.date %>
-</p>
+<tr>
+  <th>A un cargo de</th>
+  <td><%= @student_payment.student_charge.amount %></td>
+</tr>
+</table>
+</div>
+</div>
 
-<p>
-  <b>Student charge:</b>
-  <%= @student_payment.student_charge_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_student_payment_path(@student_payment) %> |
-<%= link_to 'Back', student_payments_path %>
+<%= link_to 'Ver pagos de Estudiantes', student_payments_path, :class => "btn btn-large" %>

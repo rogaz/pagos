@@ -1,57 +1,61 @@
 <h2><%= @person.name %></h2>
 <% unless @student.nil? %>
-  <p><h4>Cargos de Escuela</h4></p>
+  <% if @student.student_charges.empty? %>
+    <p><h4>No tiene cargos de Escuela</h4></p>
+  <% else %>
+    <p><h4>Cargos de Escuela</h4></p>
     <table class="table table-striped table-bordered table-condensed">
   <tr>
+    <th></th>
     <th>Cantidad</th>
     <th>Recargo</th>
     <th>Liquidado</th>
     <th>Descripción</th>
     <th>Fecha</th>
-    <th></th>
-    <th></th>
+    <!--<th></th>-->
     <th></th>
   </tr>
 
 <% @student_charges.each do |student_charge| %>
   <tr>
+    <td><%= link_to 'Pagar', student_charge %></td>
     <td><%= student_charge.amount %></td>
     <td><%= student_charge.surcharge %></td>
     <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
     <td><%= student_charge.description %></td>
-    <td><%= student_charge.date.strftime("%Y-%m-%d %H:%M") %></td>
-    <td><%= link_to 'Ver Pagos', student_charge %></td>
-    <td><%= link_to 'Editar', edit_student_charge_path(student_charge) %></td>
+    <td><%= date_with_format(student_charge.date) %></td>
+    <!--<td><%= link_to 'Editar', edit_student_charge_path(student_charge) %></td>-->
     <td><%= link_to 'Eliminar', student_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
+  <% end %>
 <% end %>
 
 <% unless @patient.nil? %>
-  <% if  @patient.patient_charges.empty? %>
+  <% if @patient.patient_charges.empty? %>
     <p><h4>No tiene cargos de CENAAC</h4</p>
   <% else %>
     <p><h4>Cargos de CENAAC</h4></p>
     <table class="table table-striped table-bordered table-condensed">
   <tr>
+    <th></th>
     <th>Cantidad</th>
     <th>Liquidado</th>
     <th>Descripción</th>
     <th>Fecha</th>
-    <th></th>
-    <th></th>
+    <!--<th></th>-->
     <th></th>
   </tr>
 
 <% @patient_charges.each do |patient_charge| %>
   <tr>
+    <td><%= link_to 'Pagar', patient_charge %></td>
     <td><%= patient_charge.amount %></td>
     <td><% unless patient_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
     <td><%= patient_charge.description %></td>
-    <td><%= patient_charge.date.strftime("%Y-%m-%d %H:%M") %></td>
-    <td><%= link_to 'Ver Pagos', patient_charge %></td>
-    <td><%= link_to 'Editar', edit_patient_charge_path(patient_charge) %></td>
+    <td><%= date_with_format(patient_charge.date) %></td>
+    <!--<td><%= link_to 'Editar', edit_patient_charge_path(patient_charge) %></td>-->
     <td><%= link_to 'Eliminar', patient_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>

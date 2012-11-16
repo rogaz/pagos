@@ -6,7 +6,6 @@
     <th>Liquidado</th>
     <th>Descripción</th>
     <th>Fecha</th>
-    <th>Patient_ID</th>
     <th>Paciente</th>
     <th></th>
     <th></th>
@@ -16,10 +15,9 @@
 <% @patient_charges.each do |patient_charge| %>
   <tr>
     <td><%= patient_charge.amount %></td>
-    <td><%= patient_charge.liquidated %></td>
+    <td><% unless patient_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
     <td><%= patient_charge.description %></td>
-    <td><%= patient_charge.date.strftime("%Y-%m-%d %H:%M") %></td>
-    <td><%= patient_charge.patient_id %></td>
+    <td><%= date_with_format(patient_charge.date) %></td>
     <td><%= patient_charge.patient.person.name %></td>
     <td><%= link_to 'Detalles', patient_charge %></td>
     <td><%= link_to 'Editar', edit_patient_charge_path(patient_charge) %></td>

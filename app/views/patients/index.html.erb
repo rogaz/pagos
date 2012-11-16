@@ -1,12 +1,12 @@
-<h1>Listing patients</h1>
+<h1>Lista de Pacientes</h1>
 
 <table class="table table-striped table-bordered table-condensed">
   <tr>
-    <th>Person</th>
-    <th>Category</th>
-    <th>Cost</th>
-    <th></th>
-    <th></th>
+    <th>Persona</th>
+    <th>Categoría</th>
+    <th>Costo de Sesión</th>
+    <!--<th></th>
+    <th></th>-->
   </tr>
 
 <% @patients.each do |patient| %>
@@ -14,8 +14,8 @@
     <td><%= patient.person.name %></td>
     <td><%= patient.category.name %></td>
     <td><%= patient.cost %></td>
-    <td><%= link_to 'Show', patient %></td>
-    <td><%= link_to 'Nueva sesion', new_charge_to_patient_path(patient.id) %></td>
+    <!--<td><%= link_to 'Detalles', patient %></td>
+    <td><%= link_to 'Nueva sesion', new_charge_to_patient_path(patient.id) %></td>-->
   </tr>
 <% end %>
 </table>

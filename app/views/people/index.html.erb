@@ -12,7 +12,7 @@
     <th>CENAAC</th>
     <th>Costo</th>
     <th></th>
-    <th></th>
+    <!--<th></th>-->
     <th></th>
     <th></th>
   </tr>
@@ -46,9 +46,9 @@
     <% end %>
     </td>
     <td><%= link_to 'Ver Cargos', people_charges_path(person) %></td>
-    <td><%= link_to 'Detalles', person %></td>
+    <!--<td><%= link_to 'Detalles', person %></td>-->
     <td><%= link_to 'Editar', edit_person_path(person) %></td>
-    <td><%= link_to 'Eliminar', person, method: :delete, data: { confirm: '¿Esta seguro que quiere eliminar a esta persona?' } %></td>
+    <td><%= link_to 'Eliminar', person, method: :delete, data: { confirm: "¿Esta seguro que quiere eliminar a #{person.name}?" } %></td>
 
   </tr>
 <% end %>
