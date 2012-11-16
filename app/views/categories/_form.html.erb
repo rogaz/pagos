@@ -12,14 +12,14 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label "Nombre" %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :description %><br />
+    <%= f.label "Descripción" %>
     <%= f.text_field :description %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Guardar Cambios", :class => "btn btn-success" %>
   </div>
 <% end %>
