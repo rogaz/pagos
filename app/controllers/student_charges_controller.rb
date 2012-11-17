@@ -11,7 +11,9 @@ class StudentChargesController < ApplicationController
         @category.students.each do |student|
           unless student.student_charges.nil?
             student.student_charges.each do |student_charge|
-              @student_charges << student_charge
+              if student_charge.liquidated == "no"
+                @student_charges << student_charge
+              end
             end
           end
         end

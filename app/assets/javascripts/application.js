@@ -18,3 +18,10 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+$(document).ready(function() {
+    $('tr.ClickableRow').click(function () {
+       var url = $(this).attr('href');
+       window.location.href = url;
+    });
+});

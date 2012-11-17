@@ -20,7 +20,7 @@
   <tr>
     <td><%= link_to 'Pagar', student_charge %></td>
     <td><%= student_charge.amount %></td>
-    <td><%= student_charge.surcharge %></td>
+    <td><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
     <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
     <td><%= student_charge.description %></td>
     <td><%= date_with_format(student_charge.date) %></td>
