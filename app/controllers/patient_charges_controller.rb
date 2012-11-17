@@ -3,7 +3,21 @@ class PatientChargesController < ApplicationController
   # GET /patient_charges.json
   def index
     if params[:category_id].nil?
-      @patient_charges = PatientCharge.all
+      #@patient_charges = PatientCharge.find(:all)
+      @patient_charges_months = PatientCharge.find(:all).group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
+      @quantity = @patient_charges_months.count
+      @not_liquidated = 0
+      @liquidated = 0
+=begin
+      @patient_charges_months.each do |patient_charges|
+        for patient_charge in patient_charges
+          if patient_charge.liquidated == "no"
+            @not_liquidated = @not_liquidated + 1
+          end
+        end
+      end
+      @liquidated = @quantity - @not_liquidated
+=end
     else
       @patient_charges = Array.new
       @category = Category.find params[:category_id]
@@ -11,8 +25,11 @@ class PatientChargesController < ApplicationController
         @category.patients.each do |patient|
           unless patient.patient_charges.nil?
             patient.patient_charges.each do |patient_charge|
-              @patient_charges << patient_charge
+              if patient_charge.liquidated == "no"
+                @patient_charges << patient_charge
+              end
             end
+            @patient_charges_months = @patient_charges.group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
           end
         end
       end

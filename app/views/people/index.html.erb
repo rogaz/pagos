@@ -1,4 +1,4 @@
-<h1>Lista de Personas</h1>
+<h2>Personas</h2>
 
 <table class="table table-striped table-bordered table-condensed">
   <tr>
@@ -6,13 +6,13 @@
     <th>Categoria</th>
     <th>Costo</th>
     <% fecha_actual = Time.now-7.hour %>
-    <% if fecha_actual.day > 5 %>
+    <% if fecha_actual.day > 5 and fecha_actual.day < 17 %>
     <th>Aplicar Recargo</th>
     <% end %>
     <th>CENAAC</th>
     <th>Costo</th>
     <th></th>
-    <!--<th></th>-->
+    <th></th>
     <th></th>
     <th></th>
   </tr>
@@ -22,7 +22,7 @@
     <td><%= person.name %></td>
     <td><%= person.student.nil? ? "" : person.student.category.name %></td>
     <td><%= person.student.nil? ? "" : "$#{person.student.cost}.00" %></td>
-    <% if fecha_actual.day > 5 %>
+    <% if fecha_actual.day > 5 and fecha_actual.day < 17 %>
     <% unless person.student.nil? %>
       <% cargo = person.student.student_charges.where('extract(month from date) = ?', fecha_actual.month).first %>
       <% unless cargo.nil? %>

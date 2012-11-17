@@ -1,13 +1,20 @@
-<p>
-  <b>Name:</b>
-  <%= @category.name %>
-</p>
+<table class="table table-bordered table-striped">
+<tr>
+  <th>Nombre</th>
+  <td><%= @category.name %></td>
+</tr>
 
-<p>
-  <b>Description:</b>
-  <%= @category.description %>
-</p>
+<tr>
+  <th>Descripción</th>
+  <td><%= @category.description %></td>
+</tr>
+</table>
 
+<% if @category.name == "CENAAC" %>
+  <%= link_to "Cargos no Liquididados de #{@category.name}", patient_charges_to_pay_path(@category.id), :class => "btn btn-info" %>
+<% else %>
+  <%= link_to "Cargos no Liquididados de #{@category.name}", student_charges_to_pay_path(@category.id), :class => "btn btn-info" %>
+<% end %>
 
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+<%= link_to 'Editar', edit_category_path(@category), :class => "btn" %>
+<%= link_to 'Regresar', categories_path, :class => "btn" %>

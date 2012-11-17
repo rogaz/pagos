@@ -63,26 +63,26 @@
 <div class="row-fluid">
   <div class="span4">
     <% unless @student_payments.empty? %>
-<table  class="table table-striped table-bordered table-condensed">
-  <tr>
-    <th>Cantidad</th>
-    <th>Fecha</th>
-    <!--<th></th>
-    <th></th>-->
-    <th></th>
-  </tr>
+      <table  class="table table-striped table-bordered table-condensed">
+        <tr>
+          <th>Cantidad</th>
+          <th>Fecha</th>
+          <!--<th></th>
+          <th></th>-->
+          <th></th>
+        </tr>
 
-<% @student_payments.each do |student_payment| %>
-  <tr>
-    <td>$<%= student_payment.amount %>.00</td>
-    <td><%= date_with_format(student_payment.date) %></td>
-    <!--<td><%= link_to 'Show', student_payment %></td>
-    <td><%= link_to 'Edit', edit_student_payment_path(student_payment) %></td>-->
-    <td><%= link_to 'Eliminar', student_payment, method: :delete, data: { confirm: "¿Quiere eliminar este pago de $#{student_payment.amount}.00?" } %></td>
-  </tr>
-<% end %>
-</table>
-<% end %>
+        <% @student_payments.each do |student_payment| %>
+          <tr>
+            <td>$<%= student_payment.amount %>.00</td>
+            <td><%= date_with_format(student_payment.date) %></td>
+            <!--<td><%= link_to 'Show', student_payment %></td>
+            <td><%= link_to 'Edit', edit_student_payment_path(student_payment) %></td>-->
+            <td><%= link_to 'Eliminar', student_payment, method: :delete, data: { confirm: "¿Quiere eliminar este pago de $#{student_payment.amount}.00?" } %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
   </div>
 
   <% @payments_total = 0 %>
