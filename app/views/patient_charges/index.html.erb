@@ -49,16 +49,13 @@
 
   <div class="row-fluid">
     <div class="span3">
-      Cargos No Liquidados<br/>
-      <%= not_liquidated %>
+      <span class="label label-important">Cargos No Liquidados <%= not_liquidated %></span>      
     </div>
     <div class="span3">
-      Cargos Liquidados<br/>
-      <%= liquidated %>
+      <span class="label label-success">Cargos Liquidados <%= liquidated %></span>
     </div>
     <div class="span3">
-      Total de Cargos<br/>
-      <%= patient_charges.count %>
+      <span class="label label-info">Total de Cargos <%= patient_charges.count %></span>
     </div>
   </div>
   <% if !bandera %>
