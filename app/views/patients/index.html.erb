@@ -5,8 +5,7 @@
     <th>Persona</th>
     <th>Categoría</th>
     <th>Costo de Sesión</th>
-    <!--<th></th>
-    <th></th>-->
+    <!--<th></th>-->
   </tr>
 
 <% @patients.each do |patient| %>
@@ -14,8 +13,7 @@
     <td><%= patient.person.name %></td>
     <td><%= patient.category.name %></td>
     <td>$<%= patient.cost %>.00</td>
-    <!--<td><%= link_to 'Detalles', patient %></td>
-    <td><%= link_to 'Nueva sesion', new_charge_to_patient_path(patient.id) %></td>-->
+    <!--<td><%= link_to 'Detalles', patient %></td>-->
   </tr>
 <% end %>
 </table>
