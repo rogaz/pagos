@@ -214,7 +214,7 @@ class PeopleController < ApplicationController
         elsif student_tiene_cargos and patient_tiene_cargos
           flash[:notice] = "El persona #{@person.name} tiene cargos de Colegiatura y de Sesion"
         end
-        format.html { redirect_to people_url }
+        format.html { redirect_to people_charges_path(@person) }
       end
     end
   end
@@ -228,6 +228,42 @@ class PeopleController < ApplicationController
     unless @person.patient.nil?
       @patient = Person.find(params[:id]).patient
       @patient_charges = @patient.patient_charges
+      @patient_charge = PatientCharge.new
+      #@patient = Patient.find params[:patient_id] unless params[:patient_id].nil?
+      @horarios = Array.new
+      i = 0
+      while i < 13
+        if i < 3
+        @horarios << "#{i+8}:00 a.m. - #{i+9}:00 a.m."
+        elsif i == 4
+          @horarios << "#{i+8}:00 a.m. - #{i-3}:00 p.m."
+        elsif i > 4
+          @horarios << "#{i-4}:00 p.m. - #{i-3}:00 p.m."
+        end
+        i += 1
+      end
+    end
+  end
+
+  def new_charge_to_patient
+    @patient_charge = PatientCharge.new
+    #@patient = Patient.find params[:patient_id] unless params[:patient_id].nil?
+    @horarios = Array.new
+    i = 0
+    while i < 13
+      if i < 3
+      @horarios << "#{i+8}:00 a.m. - #{i+9}:00 a.m."
+      elsif i == 4
+        @horarios << "#{i+8}:00 a.m. - #{i-3}:00 p.m."
+      elsif i > 4
+        @horarios << "#{i-4}:00 p.m. - #{i-3}:00 p.m."
+      end
+      i += 1
+    end
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @patient_charge }
     end
   end
 

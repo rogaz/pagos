@@ -1,0 +1,29 @@
+<div id="new_patient_charge_<%= @patient.id %>" class="modal" style="display: none; padding: 50px;">
+<h2>Crear cargo <%= @patient.nil? ? "" : "para #{@patient.person.name}" %></h2>
+
+<%= form_for(@patient_charge) do |f| %>
+  <% if @patient_charge.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@patient_charge.errors.count, "error") %> prohibited this patient_charge from being saved:</h2>
+
+      <ul>
+      <% @patient_charge.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Descripción" %>
+    <%= f.select(:description, @horarios) %>
+  </div>
+
+    <%= f.hidden_field :patient_id, :value => @patient.id %>
+
+
+  <div class="actions">
+    <%= f.submit "Crear Cargo de Sesión a #{@patient.person.name}", :class => "btn btn-success" %>
+  </div>
+<% end %>
+</div>

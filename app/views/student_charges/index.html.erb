@@ -1,32 +1,73 @@
-<% if @category.nil? %>
-  <h2>Lista de Cargos de Estudiantes</h2>
-<% else %>
-  <h2>Lista de Cargos no Liquidados de <%= @category.name %></h2>
-<% end %>
-<table class="table table-striped table-bordered table-condensed">
-  <tr>
-    <th>Cantidad</th>
-    <th>Recargo</th>
-    <th>Liquidado</th>
-    <th>Descripción</th>
-    <th>Fecha</th>
-    <th>Estudiante</th>
-    <!--<th></th>
-    <th></th>
-    <th></th>-->
-  </tr>
+<script type="text/javascript">
+  $('.carousel').carousel();
+</script>
 
-<% @student_charges.each do |student_charge| %>
-  <tr>
-    <td>$<%= student_charge.amount %>.00</td>
-    <td><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
-    <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
-    <td><%= student_charge.description %></td>
-    <td><%= date_with_format(student_charge.date) %></td>
-    <td><%= student_charge.student.person.name %></td>
-    <!--<td><%= link_to 'Detalles', student_charge %></td>
-    <td><%= link_to 'Editar', edit_student_charge_path(student_charge) %></td>
-    <td><%= link_to 'Eliminar', student_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
-  </tr>
-<% end %>
-</table>
+<% bandera = false %>
+<div id="student_charges" class="carousel slide">
+  <% if @category.nil? %>
+    <h2>Lista de Cargos de Estudiantes</h2>
+  <% else %>
+    <h2>Lista de Cargos no Liquidados de <%= @category.name %></h2>
+  <% end %>
+  <div class="carousel-inner">
+    <% @student_charges_months.each do |month, student_charges| %>
+      <% not_liquidated = 0 %>
+      <% liquidated = 0 %>
+      <% if !bandera %>
+        <div class="item active">
+      <% else %>
+        <div class="item">
+      <% end %>
+
+      <% bandera = true if !bandera %>
+      <h2><%= month %></h2>
+      <table class="table table-striped table-bordered table-condensed">
+        <tr>
+          <th>Cantidad</th>
+          <th>Recargo</th>
+          <th>Liquidado</th>
+          <th>Descripción</th>
+          <th>Fecha</th>
+          <th>Estudiante</th>
+          <!--<th></th>
+          <th></th>
+          <th></th>-->
+        </tr>
+
+        <% student_charges.each do |student_charge| %>
+          <tr>
+            <td>$<%= student_charge.amount %>.00</td>
+            <td><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
+            <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
+            <td><%= student_charge.description %></td>
+            <td><%= date_with_format(student_charge.date) %></td>
+            <td><%= student_charge.student.person.name %></td>
+            <!--<td><%= link_to 'Detalles', student_charge %></td>
+            <td><%= link_to 'Editar', edit_student_charge_path(student_charge) %></td>
+            <td><%= link_to 'Eliminar', student_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+          </tr>
+          <% student_charge.liquidated == "no" ? not_liquidated = not_liquidated + 1 : liquidated = liquidated + 1 %>
+        <% end %>
+      </table>
+
+      <div class="row-fluid">
+        <div class="span3">
+          <span class="label label-important">Cargos No Liquidados <%= not_liquidated %></span>
+        </div>
+        <div class="span3">
+          <span class="label label-success">Cargos Liquidados <%= liquidated %></span>
+        </div>
+        <div class="span3">
+          <span class="label label-info">Total de Cargos <%= student_charges.count %></span>
+        </div>
+      </div>
+      <% if !bandera %>
+        </div>
+      <% else %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <a class="carousel-control left" style="left: -50px; top:50px;" href="#student_charges" data-slide="prev" data-interval="5000" data-pause="hover">&lsaquo;</a>
+  <a class="carousel-control right" style="right: -50px; top:50px;" href="#student_charges" data-slide="next" data-interval="5000" data-pause="hover">&rsaquo;</a>
+</div>

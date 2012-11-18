@@ -4,6 +4,7 @@ class StudentChargesController < ApplicationController
   def index
     if params[:category_id].nil?
       @student_charges = StudentCharge.all
+      @student_charges_months = StudentCharge.find(:all, :order => "date DESC").group_by { |student_charge| student_charge.date.strftime("%B %Y") }
     else
       @student_charges = Array.new
       @category = Category.find params[:category_id]

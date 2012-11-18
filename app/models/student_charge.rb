@@ -3,5 +3,5 @@ class StudentCharge < ActiveRecord::Base
 
   belongs_to :student
   has_many :student_payments, :dependent => :destroy
-
+  default_scope :order => 'student_charges.date DESC'
 end

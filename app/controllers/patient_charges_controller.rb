@@ -4,20 +4,7 @@ class PatientChargesController < ApplicationController
   def index
     if params[:category_id].nil?
       #@patient_charges = PatientCharge.find(:all)
-      @patient_charges_months = PatientCharge.find(:all).group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
-      @quantity = @patient_charges_months.count
-      @not_liquidated = 0
-      @liquidated = 0
-=begin
-      @patient_charges_months.each do |patient_charges|
-        for patient_charge in patient_charges
-          if patient_charge.liquidated == "no"
-            @not_liquidated = @not_liquidated + 1
-          end
-        end
-      end
-      @liquidated = @quantity - @not_liquidated
-=end
+      @patient_charges_months = PatientCharge.find(:all, :order => "date DESC").group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
     else
       @patient_charges = Array.new
       @category = Category.find params[:category_id]
@@ -95,7 +82,7 @@ class PatientChargesController < ApplicationController
 
     respond_to do |format|
       if @patient_charge.save
-        format.html { redirect_to @patient_charge, notice: 'Patient charge was successfully created.' }
+        format.html { redirect_to people_charges_path(@patient_charge.patient.person), notice: 'Patient charge was successfully created.' }
         format.json { render json: @patient_charge, status: :created, location: @patient_charge }
       else
         format.html { render action: "new" }

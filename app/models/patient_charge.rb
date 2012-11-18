@@ -3,5 +3,5 @@ class PatientCharge < ActiveRecord::Base
 
   belongs_to :patient
   has_many :patient_payments, :dependent => :destroy
-  
+  default_scope :order => 'patient_charges.date DESC'
 end

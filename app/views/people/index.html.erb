@@ -1,6 +1,6 @@
 <h2>Personas</h2>
 
-<table class="table table-striped table-bordered table-condensed">
+<table class="table table-striped table-bordered">
   <tr>
     <th>Nombre</th>
     <th>Categoria</th>
@@ -11,14 +11,13 @@
     <% end %>
     <th>CENAAC</th>
     <th>Costo</th>
+    <!--<th></th>
     <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th></th>-->
   </tr>
 
 <% @people.each do |person| %>
-  <tr>
+  <tr class="ClickableRow" href="<%= people_charges_path(person) %> ">
     <td><%= person.name %></td>
     <td><%= person.student.nil? ? "" : person.student.category.name %></td>
     <td><%= person.student.nil? ? "" : "$#{person.student.cost}.00" %></td>
@@ -40,15 +39,10 @@
     <% end %>
     <td><% unless  person.patient.nil? %><i class="icon-ok"></i><% end %></td>
     <td><%= person.patient.nil? ? "" : "$#{person.patient.cost}.00" %></td>
-    <td>
-    <% unless person.patient.nil? %>
-      <%= link_to 'Nueva sesion', new_charge_to_patient_path(person.patient.id) %>
-    <% end %>
-    </td>
-    <td><%= link_to 'Ver Cargos', people_charges_path(person) %></td>
-    <!--<td><%= link_to 'Detalles', person %></td>-->
+    <!--<td><%= link_to 'Ver Cargos', people_charges_path(person) %></td>
+    <td><%= link_to 'Detalles', person %></td>
     <td><%= link_to 'Editar', edit_person_path(person) %></td>
-    <td><%= link_to 'Eliminar', person, method: :delete, data: { confirm: "¿Esta seguro que quiere eliminar a #{person.name}?" } %></td>
+    <td><%= link_to 'Eliminar', person, method: :delete, data: { confirm: "¿Esta seguro que quiere eliminar a #{person.name}?" } %></td>-->
 
   </tr>
 <% end %>

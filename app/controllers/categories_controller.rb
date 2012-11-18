@@ -6,7 +6,7 @@ class CategoriesController < ApplicationController
 
     dia_de_cargo = 2
     fecha_actual = Time.now
-    if fecha_actual.day >= dia_de_cargo and fecha_actual.day < 15
+    if fecha_actual.day >= dia_de_cargo and fecha_actual.day < 19
       @students = Student.all
       @students.each do |student|
         if student.student_charges.where('extract(month from date) = ?', fecha_actual.month).empty?

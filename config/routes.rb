@@ -21,7 +21,6 @@ Pagos::Application.routes.draw do
 
   get "student_charges/to_pay/:category_id" => "student_charges#index", :as => :student_charges_to_pay
   get "patient_charges/to_pay/:category_id" => "patient_charges#index", :as => :patient_charges_to_pay
-  get "patient_charges/new/:patient_id" => "patient_charges#new", :as => :new_charge_to_patient
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
