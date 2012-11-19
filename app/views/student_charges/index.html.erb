@@ -13,6 +13,7 @@
     <% @student_charges_months.each do |month, student_charges| %>
       <% not_liquidated = 0 %>
       <% liquidated = 0 %>
+      <% amount_receivable = 0 %>
       <% if !bandera %>
         <div class="item active">
       <% else %>
@@ -21,36 +22,18 @@
 
       <% bandera = true if !bandera %>
       <h2><%= month %></h2>
-      <table class="table table-striped table-bordered table-condensed">
-        <tr>
-          <th>Cantidad</th>
-          <th>Recargo</th>
-          <th>Liquidado</th>
-          <th>Descripción</th>
-          <th>Fecha</th>
-          <th>Estudiante</th>
-          <!--<th></th>
-          <th></th>
-          <th></th>-->
-        </tr>
-
-        <% student_charges.each do |student_charge| %>
-          <tr>
-            <td>$<%= student_charge.amount %>.00</td>
-            <td><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
-            <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
-            <td><%= student_charge.description %></td>
-            <td><%= date_with_format(student_charge.date) %></td>
-            <td><%= student_charge.student.person.name %></td>
-            <!--<td><%= link_to 'Detalles', student_charge %></td>
-            <td><%= link_to 'Editar', edit_student_charge_path(student_charge) %></td>
-            <td><%= link_to 'Eliminar', student_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
-          </tr>
-          <% student_charge.liquidated == "no" ? not_liquidated = not_liquidated + 1 : liquidated = liquidated + 1 %>
-        <% end %>
-      </table>
-
+      <% student_charges.each do |student_charge| %>
+        <% if student_charge.liquidated == "no"
+            not_liquidated = not_liquidated + 1
+            amount_receivable += student_charge.amount
+        else
+            liquidated = liquidated + 1
+        end %>
+      <% end %>
       <div class="row-fluid">
+        <div class="span3">
+          <span class="label">Por cobrar $<%= amount_receivable %>.00</span>
+        </div>
         <div class="span3">
           <span class="label label-important">Cargos No Liquidados <%= not_liquidated %></span>
         </div>
@@ -61,6 +44,34 @@
           <span class="label label-info">Total de Cargos <%= student_charges.count %></span>
         </div>
       </div>
+      <table class="table table-striped table-bordered table-condensed">
+        <tr>
+          <th>Estudiante</th>
+          <th>Cantidad</th>
+          <th>Recargo</th>
+          <th>Liquidado</th>
+          <th>Descripción</th>
+          <th>Fecha</th>
+          <!--<th></th>
+          <th></th>
+          <th></th>-->
+        </tr>
+
+        <% student_charges.each do |student_charge| %>
+          <tr>
+            <td><%= student_charge.student.person.name %></td>
+            <td>$<%= student_charge.amount %>.00</td>
+            <td><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
+            <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
+            <td><%= student_charge.description %></td>
+            <td><%= date_with_format(student_charge.date) %></td>
+            <!--<td><%= link_to 'Detalles', student_charge %></td>
+            <td><%= link_to 'Editar', edit_student_charge_path(student_charge) %></td>
+            <td><%= link_to 'Eliminar', student_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+          </tr>
+        <% end %>
+      </table>
+
       <% if !bandera %>
         </div>
       <% else %>

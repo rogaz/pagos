@@ -6,8 +6,12 @@ Pagos::Application.routes.draw do
   root :to => "Categories#index"
 
   resources :patient_charges
+  
+  post "pay_patient_charge/:patient_charge_id" => "patient_charges#pay_patient_charge", :as => :pay_patient_charge
 
   resources :student_charges
+
+  post "pay_student_charge/:student_charge_id" => "student_charges#pay_student_charge", :as => :pay_student_charge
 
   resources :patients
 

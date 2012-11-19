@@ -8,16 +8,21 @@ class StudentChargesController < ApplicationController
     else
       @student_charges = Array.new
       @category = Category.find params[:category_id]
-      unless @category.students.nil?
+      unless @category.students.empty?
         @category.students.each do |student|
-          unless student.student_charges.nil?
+          unless student.student_charges.empty?
             student.student_charges.each do |student_charge|
               if student_charge.liquidated == "no"
                 @student_charges << student_charge
               end
             end
+            @student_charges_months = @student_charges.group_by { |student_charge| student_charge.date.strftime("%B %Y") }
+          else
+            @student_charges_months = Array.new
           end
         end
+      else
+        @student_charges_months = Array.new
       end
     end
 
@@ -107,16 +112,35 @@ class StudentChargesController < ApplicationController
     end
   end
 
-  def to_pay
-    @category = Category.find params[:category_id]
+  def pay_student_charge
+    unless params[:student_charge_id].nil?
+      @student_charge = StudentCharge.find params[:student_charge_id]
+      unless @student_charge.liquidated == "si"
+        @student_payment = StudentPayment.new
+        @student_payment.date = Time.now
+        if @student_charge.student_payments.empty?
+          @student_payment.amount = @student_charge.amount
+        else
+          paid = 0
+          @student_charge.student_payments.each do |student_charge|
+            paid = paid + student_charge.amount
+          end
+          to_pay = @student_charge.amount - paid
+          @student_payment.amount = to_pay
+        end
+        @student_payment.student_charge_id = @student_charge.id
+        @student_payment.save
+        @student_charge.liquidated = "si"
+        @student_charge.save
 
-    @category.students.each do |student|
-      @charge_students << student.student_charges
-    end
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @student_charges }
+        respond_to do |format|
+          format.js { render "people/pay_student_charge" }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to people_url }
+      end
     end
   end
 

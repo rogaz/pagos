@@ -125,4 +125,33 @@ class PatientChargesController < ApplicationController
       end
     end
   end
+
+  def pay_patient_charge
+    unless params[:patient_charge_id].nil?
+      @patient_charge = PatientCharge.find params[:patient_charge_id]
+      @patient_payment = PatientPayment.new
+      @patient_payment.date = Time.now
+      if @patient_charge.patient_payments.empty?
+        @patient_payment.amount = @patient_charge.amount
+      else
+        paid = 0
+        @patient_charge.patient_payments.each do |patient_charge|
+          paid = paid + patient_charge.amount
+        end
+        to_pay = @patient_charge.amount - paid
+        @patient_payment.amount = to_pay
+      end
+      @patient_payment.patient_charge_id = @patient_charge.id
+      @patient_payment.save
+      @patient_charge.liquidated = "si"
+      @patient_charge.save
+
+      respond_to do |format|
+        format.js { render "people/pay_patient_charge" }
+      end
+    else
+      redirect_to people_charges_url
+    end
+  end
+
 end

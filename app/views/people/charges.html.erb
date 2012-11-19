@@ -12,6 +12,7 @@
     <table class="table table-striped table-bordered table-condensed">
       <tr>
         <th></th>
+        <th></th>
         <th>Cantidad</th>
         <th>Recargo</th>
         <th>Liquidado</th>
@@ -23,10 +24,25 @@
 
       <% @student_charges.each do |student_charge| %>
         <tr>
-          <td><%= link_to 'Pagar', student_charge %></td>
-          <td><%= student_charge.amount %></td>
+          <td>
+            <% if student_charge.student_payments.empty? %>
+              <%= link_to 'Pagar', pay_student_charge_url(student_charge.id), :id => "pay_student_charge_#{student_charge.id}", :method => :post, :remote => true %>
+            <% elsif !student_charge.student_payments.empty? %>
+              <% paid = 0 %>
+              <% student_charge.student_payments.each do |payment| %>
+                <% paid = paid + payment.amount %>
+              <% end %>
+              <% to_pay = student_charge.amount - paid %>
+              <% if student_charge.liquidated == "no" %>
+                <%= link_to "Liquidar con $#{to_pay}.00", pay_student_charge_url(student_charge.id), :id => "pay_student_charge_#{student_charge.id}", :method => :post, :remote => true %>
+              <% end %>
+            <% end %>
+          </td>
+          <!--<td><%= link_to 'Pagar', student_charge %></td>-->
+          <td><%= link_to 'Abonar', student_charge %></td>
+          <td>$<%= student_charge.amount %>.00</td>
           <td><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
-          <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
+          <td id="student_charge_liquidated_<%= student_charge.id %>"><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
           <td><%= student_charge.description %></td>
           <td><%= date_with_format(student_charge.date) %></td>
           <!--<td><%= link_to 'Editar', edit_student_charge_path(student_charge) %></td>-->
@@ -52,6 +68,7 @@
     <table class="table table-striped table-bordered table-condensed">
       <tr>
         <th></th>
+        <th></th>
         <th>Cantidad</th>
         <th>Liquidado</th>
         <th>Descripción</th>
@@ -62,9 +79,23 @@
 
       <% @patient_charges.each do |patient_charge| %>
         <tr>
-          <td><%= link_to 'Pagar', patient_charge %></td>
-          <td><%= patient_charge.amount %></td>
-          <td><% unless patient_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
+          <td>
+            <% if patient_charge.patient_payments.empty? %>
+              <%= link_to 'Pagar', pay_patient_charge_url(patient_charge.id), :id => "pay_patient_charge_#{patient_charge.id}", :method => :post, :remote => true %>
+            <% elsif !patient_charge.patient_payments.empty? %>
+              <% paid = 0 %>
+              <% patient_charge.patient_payments.each do |payment| %>
+                <% paid = paid + payment.amount %>
+              <% end %>
+              <% to_pay = patient_charge.amount - paid %>
+              <% if patient_charge.liquidated == "no" %>
+                <%= link_to "Liquidar con $#{to_pay}.00", pay_patient_charge_url(patient_charge.id), :id => "pay_patient_charge_#{patient_charge.id}", :method => :post, :remote => true %>
+              <% end %>
+            <% end %>
+          </td>
+          <td><%= link_to 'Abonar', patient_charge %></td>
+          <td>$<%= patient_charge.amount %>.00</td>
+          <td id="patient_charge_liquidated_<%= patient_charge.id %>"><% unless patient_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
           <td><%= patient_charge.description %></td>
           <td><%= date_with_format(patient_charge.date) %></td>
           <!--<td><%= link_to 'Editar', edit_patient_charge_path(patient_charge) %></td>-->
