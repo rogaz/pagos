@@ -1,6 +1,19 @@
 
 <div class="row-fluid">
-  <div class="span7"><h2><%= @person.name %></h2></div>
+  <div class="span6"><h2><%= @person.name %></h2></div>
+  <div class="span2">
+    <% fecha_actual = Time.now %>
+    <% if fecha_actual.day > 5 and fecha_actual.day < 26 %>
+      <% unless @person.student.nil? %>
+        <% cargo = @person.student.student_charges.where('extract(month from date) = ?', fecha_actual.month).first %>
+        <% unless cargo.nil? %>
+          <% if cargo.liquidated ==  "no" %>
+            <%= link_to 'Aplicar', "#", :class => "btn" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
   <div class="span2"><%= link_to 'Editar', edit_person_path(@person), :class => "btn btn-info" %></div>
   <div class="span2"><%= link_to 'Eliminar', @person, method: :delete, data: { confirm: "¿Esta seguro que quiere eliminar a #{@person.name}?" }, :class => "btn btn-danger" %></div>
 </div>

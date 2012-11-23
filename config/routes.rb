@@ -1,4 +1,12 @@
 Pagos::Application.routes.draw do
+  resource  :user_session, :only => [:new, :create, :destroy]
+
+  delete "logout" => "user_sessions#destroy", :as => :logout
+
+  match "sign_in" => "User_sessions#new", :as => "signin"
+
+  resources :users
+
   resources :student_payments
 
   resources :patient_payments

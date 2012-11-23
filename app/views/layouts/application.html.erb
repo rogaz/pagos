@@ -11,12 +11,17 @@
   <div class="navbar-inner">
     <div class="container">
       <ul class="nav pull-right">
-        <li><%= link_to 'Categorias', categories_path %></li>
-        <li><%= link_to 'Personas', people_path %></li>
-        <li><%= link_to 'Estudiantes', students_path %></li>
-        <li><%= link_to 'Pacientes', patients_path %></li>
-        <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
-        <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
+        <% unless current_user_session %>
+          <li><%= link_to "Iniciar Sesión", signin_path %></li>
+        <% else %>
+          <li><%= link_to 'Categorias', categories_path %></li>
+          <li><%= link_to 'Personas', people_path %></li>
+          <li><%= link_to 'Estudiantes', students_path %></li>
+          <li><%= link_to 'Pacientes', patients_path %></li>
+          <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
+          <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
+          <li><%= link_to "Cerrar Sesión", logout_path, :method => "delete" %></li>
+        <% end %>
       </ul>
     </div>
   </div>
@@ -35,16 +40,18 @@
       <div class="span3">
         <div class="well sidebar-nav">
           <ul class="nav nav-list">
-            <li><%= link_to 'Categorias', categories_path %></li>
-            <li><%= link_to 'Personas', people_path %></li>
-            <li class="nav-header">Escuela</li>
-            <li><%= link_to 'Estudiantes', students_path %></li>
-            <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
-            <li><%= link_to 'Pagos de Escuela', student_payments_path %></li>
-            <li class="nav-header">CENAAC</li>
-            <li><%= link_to 'Pacientes', patients_path %></li>
-            <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
-            <li><%= link_to 'Pagos de CENAAC', patient_payments_path %></li>
+            <% unless !current_user_session %>
+              <li><%= link_to 'Categorias', categories_path %></li>
+              <li><%= link_to 'Personas', people_path %></li>
+              <li class="nav-header">Escuela</li>
+              <li><%= link_to 'Estudiantes', students_path %></li>
+              <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
+              <li><%= link_to 'Pagos de Escuela', student_payments_path %></li>
+              <li class="nav-header">CENAAC</li>
+              <li><%= link_to 'Pacientes', patients_path %></li>
+              <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
+              <li><%= link_to 'Pagos de CENAAC', patient_payments_path %></li>
+            <% end %>
           </ul>
         </div>
       </div>
