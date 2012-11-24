@@ -9,7 +9,7 @@
         <% cargo = @person.student.student_charges.where('extract(month from date) = ?', fecha_actual.month).first %>
         <% unless cargo.nil? %>
           <% if cargo.liquidated ==  "no" and cargo.surcharge == false %>
-            <%= link_to 'Aplicar Recargo ', apply_surcharge_url(cargo.id), :method => :post, :remote => true, :class => "btn", :id => "button_apply_surcharge" %>
+            <%= link_to 'Aplicar Recargo', apply_surcharge_url(cargo.id), :method => :post, :remote => true, :class => "btn", :id => "button_apply_surcharge" %>
           <% end %>
         <% end %>
       <% end %>
@@ -18,7 +18,7 @@
   <div class="span1"><%= link_to 'Editar', edit_person_path(@person), :class => "btn btn-info" %></div>
   <div class="span1"><%= link_to 'Eliminar', @person, method: :delete, data: { confirm: "¿Esta seguro que quiere eliminar a #{@person.name}?" }, :class => "btn btn-danger" %></div>
 </div>
-<div class="well"><h4>El alumno debe $<%= @saldo_general_por_pagar %>.00</h4></div>
+<div class="well"><h4>La persona debe $<%= @saldo_general_por_pagar %>.00</h4></div>
 <% unless @student.nil? %>
   <% if @student.student_charges.empty? %>
     <p><h4>No tiene cargos de Escuela</h4></p>
