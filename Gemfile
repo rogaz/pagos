@@ -12,6 +12,7 @@ gem 'pg'
 
 gem 'bootstrap-sass'
 
+
 gem 'unicorn-rails'
 
 # Gems used only for assets and not required
@@ -27,6 +28,9 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+gem "will_paginate"
+#gem 'will_paginate', '3.0.pre2'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -110,7 +110,6 @@ class PeopleController < ApplicationController
         else
           @student.destroy
         end
-        
       end
     else
       if @person.student.nil?
@@ -221,15 +220,41 @@ class PeopleController < ApplicationController
 
   def charges
     @person = Person.find params[:id]
+    @saldo_general_por_pagar = 0
     unless @person.student.nil?
-      @student = Person.find(params[:id]).student
-      @student_charges = @student.student_charges
+      @student = @person.student
+      params[:student_id] = @student.id
+      @student_charges = StudentCharge.will_paginate(params[:student_id], params[:student_page])
+      @student_charges_all = @student.student_charges
+      @student_charges_all.each do |student_charge|
+        unless student_charge.student_payments.empty?
+          paid = 0
+          student_charge.student_payments.each do |student_payment|
+            paid += student_payment.amount
+          end
+          @saldo_general_por_pagar += student_charge.amount - paid
+        else
+          @saldo_general_por_pagar += student_charge.amount
+        end
+      end
     end
     unless @person.patient.nil?
-      @patient = Person.find(params[:id]).patient
-      @patient_charges = @patient.patient_charges
+      @patient = @person.patient
+      params[:patient_id] = @patient.id
+      @patient_charges = PatientCharge.will_paginate(params[:patient_id], params[:patient_page])
+      @patient_charges_all = @patient.patient_charges
+      @patient_charges_all.each do |patient_charge|
+        unless patient_charge.patient_payments.empty?
+          paid = 0
+          patient_charge.patient_payments.each do |patient_payment|
+            paid += patient_payment.amount
+          end
+          @saldo_general_por_pagar += patient_charge.amount - paid
+        else
+          @saldo_general_por_pagar += patient_charge.amount
+        end
+      end
       @patient_charge = PatientCharge.new
-      #@patient = Patient.find params[:patient_id] unless params[:patient_id].nil?
       @horarios = Array.new
       i = 0
       while i < 13

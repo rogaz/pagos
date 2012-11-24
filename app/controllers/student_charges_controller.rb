@@ -144,4 +144,25 @@ class StudentChargesController < ApplicationController
     end
   end
 
+  def apply_surcharge
+    @student_charge = StudentCharge.find params[:student_charge_id]
+    unless @student_charge.surcharge
+      @student_charge.surcharge = true
+      @student_charge.amount = (@student_charge.amount * 1.10)
+      @student_charge.save
+      bandera = false
+    else
+      bandera = true
+    end
+
+    respond_to do |format|
+      unless bandera
+        format.js { render "people/apply_surcharge"}
+      else
+        flash[:error] = "El estudiante ya tiene recargo de este mes"
+        format.html {redirect_to people_charges_url(@student_charge.student.person)}
+      end
+    end
+  end
+
 end

@@ -15,3 +15,23 @@
  .ClickableRow:hover{
      cursor: pointer;
 }
+
+.pagination a, em, span{
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #DDDDDD;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px 1px 1px 0px;
+    float: left;
+    line-height: 34px;
+    padding: 0 14px;
+    text-decoration: none;
+}
+
+.pagination .previous_page{
+    border-width: 1px 1px 1px 1px;
+}
+

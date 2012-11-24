@@ -23,11 +23,19 @@
       <% bandera = true if !bandera %>
       <h2><%= month %></h2>
       <% patient_charges.each do |patient_charge| %>
+        <% patient_charge_paid = 0 %>
         <% if patient_charge.liquidated == "no"
-            not_liquidated = not_liquidated + 1
-            amount_receivable += patient_charge.amount
+            not_liquidated += 1
+            if patient_charge.patient_payments.empty?
+              amount_receivable += patient_charge.amount
+            else
+              patient_charge.patient_payments.each do |patient_payment|
+                patient_charge_paid += patient_payment.amount
+              end
+              amount_receivable += patient_charge.amount - patient_charge_paid
+            end
         else
-            liquidated = liquidated + 1
+            liquidated += 1
         end %>
       <% end %>
       <div class="row-fluid">
@@ -48,6 +56,8 @@
       <table class="table table-striped table-bordered table-condensed">
         <tr>
           <th>Paciente</th>
+          <th>Por pagar</th>
+          <th>Pagado</th>
           <th>Cantidad</th>
           <th>Liquidado</th>
           <th>Descripción</th>
@@ -59,6 +69,20 @@
         <% patient_charges.each do |patient_charge| %>
           <tr>
             <td><%= patient_charge.patient.person.name %></td>
+            <%
+              amount_receivable = 0
+              patient_charge_paid = 0
+              if patient_charge.patient_payments.empty?
+                patient_charge_paid = 0
+              else
+                patient_charge.patient_payments.each do |patient_payment|
+                  patient_charge_paid += patient_payment.amount
+                end
+              end
+              amount_receivable = patient_charge.amount - patient_charge_paid
+            %>
+            <td>$<%= amount_receivable %>.00</td>
+            <td>$<%= patient_charge_paid %>.00</td>
             <td>$<%= patient_charge.amount %>.00</td>
             <td><% unless patient_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
             <td><%= patient_charge.description %></td>

@@ -3,12 +3,14 @@
   <div class="span6"><h2><%= @person.name %></h2></div>
   <div class="span2">
     <% fecha_actual = Time.now %>
-    <% if fecha_actual.day > 5 and fecha_actual.day < 26 %>
+    <% dia_en_que_se_puede_aplicar_recargo = 5 %>
+    <% dia_en_que_ya_no_se_puede_aplicar_recargo = 28  %>
+    <% if fecha_actual.day > dia_en_que_se_puede_aplicar_recargo and fecha_actual.day < dia_en_que_ya_no_se_puede_aplicar_recargo %>
       <% unless @person.student.nil? %>
         <% cargo = @person.student.student_charges.where('extract(month from date) = ?', fecha_actual.month).first %>
         <% unless cargo.nil? %>
-          <% if cargo.liquidated ==  "no" %>
-            <%= link_to 'Aplicar', "#", :class => "btn" %>
+          <% if cargo.liquidated ==  "no" and cargo.surcharge == false %>
+            <%= link_to 'Aplicar', apply_surcharge_url(cargo.id), :method => :post, :remote => true, :class => "btn", :id => "button_apply_surcharge" %>
           <% end %>
         <% end %>
       <% end %>
@@ -17,6 +19,7 @@
   <div class="span2"><%= link_to 'Editar', edit_person_path(@person), :class => "btn btn-info" %></div>
   <div class="span2"><%= link_to 'Eliminar', @person, method: :delete, data: { confirm: "¿Esta seguro que quiere eliminar a #{@person.name}?" }, :class => "btn btn-danger" %></div>
 </div>
+<div class="well"><h4>El alumno debe $<%= @saldo_general_por_pagar %>.00</h4></div>
 <% unless @student.nil? %>
   <% if @student.student_charges.empty? %>
     <p><h4>No tiene cargos de Escuela</h4></p>
@@ -53,8 +56,8 @@
           </td>
           <!--<td><%= link_to 'Pagar', student_charge %></td>-->
           <td><%= link_to 'Abonar', student_charge %></td>
-          <td>$<%= student_charge.amount %>.00</td>
-          <td><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
+          <td id="student_charge_amount_<%= student_charge.id %>">$<%= student_charge.amount %>.00</td>
+          <td id="student_charge_surcharge_<%= student_charge.id %>"><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
           <td id="student_charge_liquidated_<%= student_charge.id %>"><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
           <td><%= student_charge.description %></td>
           <td><%= date_with_format(student_charge.date) %></td>
@@ -63,8 +66,11 @@
         </tr>
       <% end %>
     </table>
+    <div class="row-fluid"><%= will_paginate @student_charges, :param_name => 'student_page' %></div>
   <% end %>
 <% end %>
+
+
 
 <% unless @patient.nil? %>
   <% if @patient.patient_charges.empty? %>
@@ -116,5 +122,7 @@
         </tr>
       <% end %>
     </table>
+    <%= will_paginate @patient_charges, :param_name => 'patient_page' %>
   <% end %>
 <% end %>
+    

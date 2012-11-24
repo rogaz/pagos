@@ -23,11 +23,19 @@
       <% bandera = true if !bandera %>
       <h2><%= month %></h2>
       <% student_charges.each do |student_charge| %>
+        <% student_charge_paid = 0 %>
         <% if student_charge.liquidated == "no"
-            not_liquidated = not_liquidated + 1
-            amount_receivable += student_charge.amount
+            not_liquidated += 1
+            if student_charge.student_payments.empty?
+              amount_receivable += student_charge.amount
+            else
+              student_charge.student_payments.each do |student_payment|
+                student_charge_paid += student_payment.amount
+              end
+              amount_receivable += student_charge.amount - student_charge_paid
+            end
         else
-            liquidated = liquidated + 1
+            liquidated += 1
         end %>
       <% end %>
       <div class="row-fluid">
@@ -47,6 +55,8 @@
       <table class="table table-striped table-bordered table-condensed">
         <tr>
           <th>Estudiante</th>
+          <th>Por pagar</th>
+          <th>Pagado</th>
           <th>Cantidad</th>
           <th>Recargo</th>
           <th>Liquidado</th>
@@ -60,6 +70,20 @@
         <% student_charges.each do |student_charge| %>
           <tr>
             <td><%= student_charge.student.person.name %></td>
+            <%
+              amount_receivable = 0
+              student_charge_paid = 0
+              if student_charge.student_payments.empty?
+                student_charge_paid = 0
+              else
+                student_charge.student_payments.each do |student_payment|
+                  student_charge_paid += student_payment.amount
+                end
+              end
+              amount_receivable = student_charge.amount - student_charge_paid
+            %>
+            <td>$<%= amount_receivable %>.00</td>
+            <td>$<%= student_charge_paid %>.00</td>
             <td>$<%= student_charge.amount %>.00</td>
             <td><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
             <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>

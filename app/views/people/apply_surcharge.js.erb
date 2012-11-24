@@ -1,0 +1,3 @@
+$("#student_charge_amount_<%= @student_charge.id %>").text("$<%= @student_charge.amount %>.00");
+$("#student_charge_surcharge_<%= @student_charge.id %>").html("<i class='icon-star'></i>");
+$("#button_apply_surcharge").css("display","none");

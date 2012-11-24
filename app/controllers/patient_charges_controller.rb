@@ -82,7 +82,7 @@ class PatientChargesController < ApplicationController
 
     respond_to do |format|
       if @patient_charge.save
-        format.html { redirect_to people_charges_path(@patient_charge.patient.person), notice: 'Patient charge was successfully created.' }
+        format.html { redirect_to people_charges_path(@patient_charge.patient.person), notice: 'Cargo de Sesion Guardado Correctamente' }
         format.json { render json: @patient_charge, status: :created, location: @patient_charge }
       else
         format.html { render action: "new" }
