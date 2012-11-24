@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
     def authenticate
       unless current_user
-        flash[:notice] = 'No has iniciado sesión'
+        flash[:notice] = 'No ha iniciado sesión'
         redirect_to signin_path
         return false
       end
