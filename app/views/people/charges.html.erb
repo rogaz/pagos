@@ -1,6 +1,6 @@
 <div class="row-fluid">
   <div class="span6"><h2><%= @person.name %></h2></div>
-  <div class="span2">
+  <div class="span3">
     <% fecha_actual = Time.now %>
     <% dia_en_que_se_puede_aplicar_recargo = 5 %>
     <% dia_en_que_ya_no_se_puede_aplicar_recargo = 28  %>
@@ -15,8 +15,8 @@
       <% end %>
     <% end %>
   </div>
-  <div class="span2"><%= link_to 'Editar', edit_person_path(@person), :class => "btn btn-info" %></div>
-  <div class="span2"><%= link_to 'Eliminar', @person, method: :delete, data: { confirm: "¿Esta seguro que quiere eliminar a #{@person.name}?" }, :class => "btn btn-danger" %></div>
+  <div class="span1"><%= link_to 'Editar', edit_person_path(@person), :class => "btn btn-info" %></div>
+  <div class="span1"><%= link_to 'Eliminar', @person, method: :delete, data: { confirm: "¿Esta seguro que quiere eliminar a #{@person.name}?" }, :class => "btn btn-danger" %></div>
 </div>
 <div class="well"><h4>El alumno debe $<%= @saldo_general_por_pagar %>.00</h4></div>
 <% unless @student.nil? %>
