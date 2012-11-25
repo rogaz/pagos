@@ -1,2 +1,4 @@
 $("#pay_patient_charge_<%= @patient_charge.id %>").css("display","none");
 $("#patient_charge_liquidated_<%= @patient_charge.id %>").html("<i class='icon-ok'></i>");
+$("#saldo_general_por_pagar").hide().html("La persona debe $<%= saldo_general_por_pagar(@patient_charge.patient.person) %>.00").fadeIn(500);
+
