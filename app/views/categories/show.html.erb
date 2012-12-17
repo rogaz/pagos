@@ -11,9 +11,9 @@
 </table>
 
 <% if @category.name == "CENAAC" %>
-  <%= link_to "Cargos no Liquididados de #{@category.name}", patient_charges_to_pay_path(@category.id), :class => "btn btn-info" %>
+  <%= link_to "Información de #{@category.name}", information_patient_charges_path(@category.id), :class => "btn btn-info" %>
 <% else %>
-  <%= link_to "Cargos no Liquididados de #{@category.name}", student_charges_to_pay_path(@category.id), :class => "btn btn-info" %>
+  <%= link_to "Información de #{@category.name}", information_student_charges_path(@category.id), :class => "btn btn-info" %>
 <% end %>
 
 <%= link_to 'Editar', edit_category_path(@category), :class => "btn" %>

@@ -19,7 +19,7 @@ Pagos::Application.routes.draw do
 
   post "pay_student_charge/:student_charge_id" => "student_charges#pay_student_charge", :as => :pay_student_charge
 
-  post "apply_surcharge/:student_charge_id" => "student_charges#apply_surcharge", :as => :apply_surcharge
+  put "people/apply_surcharge/:student_charge_id" => "student_charges#apply_surcharge", :as => :apply_surcharge
 
   resources :student_charges
 
@@ -33,8 +33,8 @@ Pagos::Application.routes.draw do
 
   resources :categories
 
-  get "student_charges/to_pay/:category_id" => "student_charges#index", :as => :student_charges_to_pay
-  get "patient_charges/to_pay/:category_id" => "patient_charges#index", :as => :patient_charges_to_pay
+  get "student_charges/information/:category_id" => "student_charges#index", :as => :information_student_charges
+  get "patient_charges/information/:category_id" => "patient_charges#index", :as => :information_patient_charges
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

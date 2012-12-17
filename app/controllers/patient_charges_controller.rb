@@ -6,19 +6,21 @@ class PatientChargesController < ApplicationController
       #@patient_charges = PatientCharge.find(:all)
       @patient_charges_months = PatientCharge.find(:all, :order => "date DESC").group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
     else
-      @patient_charges = Array.new
+      patient_charges = Array.new
       @category = Category.find params[:category_id]
-      unless @category.patients.nil?
+      unless @category.patients.empty?
         @category.patients.each do |patient|
-          unless patient.patient_charges.nil?
+          unless patient.patient_charges.empty?
             patient.patient_charges.each do |patient_charge|
-              if patient_charge.liquidated == "no"
-                @patient_charges << patient_charge
-              end
+              patient_charges << patient_charge
             end
-            @patient_charges_months = @patient_charges.group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
+            @patient_charges_months = patient_charges.group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
+          else
+            @patient_charges_months = Array.new
           end
         end
+      else
+        @patient_charges_months = Array.new
       end
     end
 

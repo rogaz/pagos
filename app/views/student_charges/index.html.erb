@@ -7,7 +7,10 @@
   <% if @category.nil? %>
     <h2>Lista de Cargos de Estudiantes</h2>
   <% else %>
-    <h2>Lista de Cargos no Liquidados de <%= @category.name %></h2>
+    <div class="row-fluid">
+      <div class="span8"><h2>Información de <%= @category.name %></h2></div>
+      <div class="span3"><%= link_to 'Categorias', categories_path, :class => "btn" %></div>
+    </div>
   <% end %>
   <div class="carousel-inner">
     <% @student_charges_months.each do |month, student_charges| %>
