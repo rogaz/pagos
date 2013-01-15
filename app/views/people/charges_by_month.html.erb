@@ -1,0 +1,160 @@
+<%= link_to "<i class='icon-chevron-left'></i> Regresar".html_safe, people_charges_url(@person), :class => "btn btn-primary" %>
+<h2>Cargos del mes de <%= @month %></h2>
+
+<% unless @student_charges.nil? %>
+  <% not_liquidated = 0 %>
+  <% liquidated = 0 %>
+  <% amount_receivable = 0 %>
+  <% @student_charges.each do |student_charge| %>
+    <% student_charge_paid = 0 %>
+    <% if student_charge.liquidated == "no"
+          not_liquidated += 1
+          if student_charge.student_payments.empty?
+            amount_receivable += student_charge.amount
+          else
+            student_charge.student_payments.each do |student_payment|
+              student_charge_paid += student_payment.amount
+            end
+            amount_receivable += student_charge.amount - student_charge_paid
+          end
+        else
+            liquidated += 1
+        end
+    %>
+  <% end %>
+  <div class="row-fluid">
+    <div class="span3">
+      <span class="label">Por cobrar $<%= amount_receivable %>.00</span>
+    </div>
+    <div class="span3">
+      <span class="label label-important">Cargos No Liquidados <%= not_liquidated %></span>
+    </div>
+    <div class="span3">
+      <span class="label label-success">Cargos Liquidados <%= liquidated %></span>
+    </div>
+    <div class="span3">
+      <span class="label label-info">Total de Cargos <%= @student_charges.count %></span>
+    </div>
+  </div>
+  <table class="table table-striped table-bordered table-condensed">
+    <tr>
+      <th>Estudiante</th>
+      <th>Por pagar</th>
+      <th>Pagado</th>
+      <th>Cantidad</th>
+      <th>Recargo</th>
+      <th>Liquidado</th>
+      <th>Descripción</th>
+      <th>Fecha</th>
+      <!--<th></th>
+      <th></th>
+      <th></th>-->
+    </tr>
+
+    <% @student_charges.each do |student_charge| %>
+      <tr>
+        <td><%= student_charge.student.person.name %></td>
+           <%
+              amount_receivable = 0
+              student_charge_paid = 0
+              if student_charge.student_payments.empty?
+                student_charge_paid = 0
+              else
+                student_charge.student_payments.each do |student_payment|
+                  student_charge_paid += student_payment.amount
+                end
+              end
+              amount_receivable = student_charge.amount - student_charge_paid
+           %>
+        <td>$<%= amount_receivable %>.00</td>
+        <td>$<%= student_charge_paid %>.00</td>
+        <td>$<%= student_charge.amount %>.00</td>
+        <td><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
+        <td><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
+        <td><%= student_charge.description %></td>
+        <td><%= date_with_format(student_charge.date) %></td>
+        <!--<td><%= link_to 'Detalles', student_charge %></td>
+        <td><%= link_to 'Editar', edit_student_charge_path(student_charge) %></td>
+        <td><%= link_to 'Eliminar', student_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% unless @patient_charges.nil? %>
+  <% not_liquidated = 0 %>
+  <% liquidated = 0 %>
+  <% amount_receivable = 0 %>
+  <% @patient_charges.each do |patient_charge| %>
+    <% patient_charge_paid = 0 %>
+    <% if patient_charge.liquidated == "no"
+          not_liquidated += 1
+          if patient_charge.patient_payments.empty?
+            amount_receivable += patient_charge.amount
+          else
+            patient_charge.patient_payments.each do |patient_payment|
+              patient_charge_paid += patient_payment.amount
+            end
+            amount_receivable += patient_charge.amount - patient_charge_paid
+          end
+        else
+            liquidated += 1
+        end
+    %>
+  <% end %>
+  <div class="row-fluid">
+    <div class="span3">
+      <span class="label">Por cobrar $<%= amount_receivable %>.00</span>
+    </div>
+    <div class="span3">
+      <span class="label label-important">Cargos No Liquidados <%= not_liquidated %></span>
+    </div>
+    <div class="span3">
+      <span class="label label-success">Cargos Liquidados <%= liquidated %></span>
+    </div>
+    <div class="span3">
+      <span class="label label-info">Total de Cargos <%= @patient_charges.count %></span>
+    </div>
+  </div>
+  <table class="table table-striped table-bordered table-condensed">
+    <tr>
+      <th>Estudiante</th>
+      <th>Por pagar</th>
+      <th>Pagado</th>
+      <th>Cantidad</th>
+      <th>Liquidado</th>
+      <th>Descripción</th>
+      <th>Fecha</th>
+      <!--<th></th>
+      <th></th>
+      <th></th>-->
+    </tr>
+
+    <% @patient_charges.each do |patient_charge| %>
+      <tr>
+        <td><%= patient_charge.patient.person.name %></td>
+           <%
+              amount_receivable = 0
+              patient_charge_paid = 0
+              if patient_charge.patient_payments.empty?
+                patient_charge_paid = 0
+              else
+                patient_charge.patient_payments.each do |patient_payment|
+                  patient_charge_paid += patient_payment.amount
+                end
+              end
+              amount_receivable = patient_charge.amount - patient_charge_paid
+           %>
+        <td>$<%= amount_receivable %>.00</td>
+        <td>$<%= patient_charge_paid %>.00</td>
+        <td>$<%= patient_charge.amount %>.00</td>
+        <td><% unless patient_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
+        <td><%= patient_charge.description %></td>
+        <td><%= date_with_format(patient_charge.date) %></td>
+        <!--<td><%= link_to 'Detalles', patient_charge %></td>
+        <td><%= link_to 'Editar', edit_patient_charge_path(patient_charge) %></td>
+        <td><%= link_to 'Eliminar', patient_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+      </tr>
+    <% end %>
+  </table>
+<% end %>

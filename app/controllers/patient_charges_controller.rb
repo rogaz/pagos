@@ -70,6 +70,19 @@ class PatientChargesController < ApplicationController
   # GET /patient_charges/1/edit
   def edit
     @patient_charge = PatientCharge.find(params[:id])
+    @patient = @patient_charge.patient
+    @horarios = Array.new
+    i = 0
+    while i < 13
+      if i < 3
+      @horarios << "#{i+8}:00 a.m. - #{i+9}:00 a.m."
+      elsif i == 4
+        @horarios << "#{i+8}:00 a.m. - #{i-3}:00 p.m."
+      elsif i > 4
+        @horarios << "#{i-4}:00 p.m. - #{i-3}:00 p.m."
+      end
+      i += 1
+    end
   end
 
   # POST /patient_charges

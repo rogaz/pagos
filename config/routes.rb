@@ -27,9 +27,9 @@ Pagos::Application.routes.draw do
 
   resources :students
 
-  resources :people
-
   get "people/charges/:id" => "people#charges", :as => :people_charges
+  get "people/charges_by_month/:id/" => "people#charges_by_month", :as => :people_charges_by_month
+  resources :people
 
   resources :categories
 
