@@ -1,41 +1,8 @@
 <%= link_to "<i class='icon-chevron-left'></i> Regresar".html_safe, people_charges_url(@person), :class => "btn btn-primary" %>
 <h2>Cargos del mes de <%= @month %></h2>
 
-<% unless @student_charges.nil? %>
-  <% not_liquidated = 0 %>
-  <% liquidated = 0 %>
-  <% amount_receivable = 0 %>
-  <% @student_charges.each do |student_charge| %>
-    <% student_charge_paid = 0 %>
-    <% if student_charge.liquidated == "no"
-          not_liquidated += 1
-          if student_charge.student_payments.empty?
-            amount_receivable += student_charge.amount
-          else
-            student_charge.student_payments.each do |student_payment|
-              student_charge_paid += student_payment.amount
-            end
-            amount_receivable += student_charge.amount - student_charge_paid
-          end
-        else
-            liquidated += 1
-        end
-    %>
-  <% end %>
-  <div class="row-fluid">
-    <div class="span3">
-      <span class="label">Por cobrar $<%= amount_receivable %>.00</span>
-    </div>
-    <div class="span3">
-      <span class="label label-important">Cargos No Liquidados <%= not_liquidated %></span>
-    </div>
-    <div class="span3">
-      <span class="label label-success">Cargos Liquidados <%= liquidated %></span>
-    </div>
-    <div class="span3">
-      <span class="label label-info">Total de Cargos <%= @student_charges.count %></span>
-    </div>
-  </div>
+<% unless @student_charges.empty? %>
+  
   <table class="table table-striped table-bordered table-condensed">
     <tr>
       <th>Estudiante</th>
@@ -81,7 +48,7 @@
   </table>
 <% end %>
 
-<% unless @patient_charges.nil? %>
+<% unless @patient_charges.empty? %>
   <% not_liquidated = 0 %>
   <% liquidated = 0 %>
   <% amount_receivable = 0 %>

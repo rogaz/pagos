@@ -293,9 +293,10 @@ class PeopleController < ApplicationController
     @oldest = @oldest - (@oldest.day).day + 1.day
     @newest = @newest - (@newest.day).day + 1.day
     iteration_date = @newest
+    meses = "Loquesea Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre".split(" ")
 
     while iteration_date > @oldest
-      @rank_of_months << {value: iteration_date.strftime("%m %Y"), date: iteration_date.strftime("%B %Y")}
+      @rank_of_months << {value: iteration_date.strftime("%m %Y"), date: iteration_date.strftime("#{meses[iteration_date.month]} %Y")}
       iteration_date -= 1.month
     end
 
@@ -332,12 +333,11 @@ class PeopleController < ApplicationController
     @month = meses[month[0].to_i] + " #{month[1]}"
 
     unless @person.student.nil?
-      #@student_charges = StudentCharge.find(:all, :conditions => ['EXTRACT(MONTH from date) = ? AND EXTRACT(YEAR from date) = ?', month[0], month[1]])
-      
+      @student_charges = @person.student.student_charges.find(:all, :conditions => ['EXTRACT(MONTH from date) = ? AND EXTRACT(YEAR from date) = ?', month[0], month[1]])
     end
 
     unless @person.patient.nil?
-      #@patient_charges = PatientCharge.find(:all, :conditions => ['EXTRACT(MONTH from date) = ? AND EXTRACT(YEAR from date) = ?', month[0], month[1]])
+      @patient_charges = @person.patient.patient_charges.find(:all, :conditions => ['EXTRACT(MONTH from date) = ? AND EXTRACT(YEAR from date) = ?', month[0], month[1]])
     end
   end
 

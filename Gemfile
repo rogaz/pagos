@@ -12,7 +12,6 @@ gem 'pg'
 
 gem 'bootstrap-sass'
 
-
 gem 'unicorn-rails'
 
 # Gems used only for assets and not required
