@@ -21,11 +21,13 @@
 <div class="well">
   <div class="span5"><h4  id="saldo_general_por_pagar">La persona debe $<%= @saldo_general_por_pagar %>.00</h4></div>
   <div class="span5">
-  <%= form_tag({:controller => "people", :action => "charges_by_month"}, :method => "get") do %>
-    <% opciones = "" %>
-    <% @rank_of_months.each {|month| opciones+="<option value='#{month[:value]}'>#{month[:date]}</option>"} %>
-    <%= select_tag("month", opciones.html_safe) %>
-    <%= submit_tag "Consutar", :class => "btn" %>
+  <% unless @rank_of_months.nil? %>
+    <%= form_tag({:controller => "people", :action => "charges_by_month"}, :method => "get") do %>
+      <% opciones = "" %>
+      <% @rank_of_months.each {|month| opciones+="<option value='#{month[:value]}'>#{month[:date]}</option>"} %>
+      <%= select_tag("month", opciones.html_safe) %>
+      <%= submit_tag "Consutar", :class => "btn" %>
+    <% end %>
   <% end %>
   </div>
 </div>

@@ -221,41 +221,47 @@ class PeopleController < ApplicationController
   def charges
     @person = Person.find params[:id]
     @saldo_general_por_pagar = 0
+    
     unless @person.student.nil?
       @student = @person.student
       params[:student_id] = @student.id
       @student_charges = StudentCharge.will_paginate(params[:student_id], params[:student_page])
-      @student_charges_all = @student.student_charges.sort_by(&:date)
-      oldest_student_charge = @student_charges_all.first.date
-      newest_student_charge = @student_charges_all.last.date
-      @student_charges_all.each do |student_charge|
-        unless student_charge.student_payments.empty?
-          paid = 0
-          student_charge.student_payments.each do |student_payment|
-            paid += student_payment.amount
+      unless @student.student_charges.empty?
+        @student_charges_all = @student.student_charges.sort_by(&:date)
+        oldest_student_charge = @student_charges_all.first.date
+        newest_student_charge = @student_charges_all.last.date
+        @student_charges_all.each do |student_charge|
+          unless student_charge.student_payments.empty?
+            paid = 0
+            student_charge.student_payments.each do |student_payment|
+              paid += student_payment.amount
+            end
+            @saldo_general_por_pagar += student_charge.amount - paid
+          else
+            @saldo_general_por_pagar += student_charge.amount
           end
-          @saldo_general_por_pagar += student_charge.amount - paid
-        else
-          @saldo_general_por_pagar += student_charge.amount
         end
       end
     end
+
     unless @person.patient.nil?
       @patient = @person.patient
       params[:patient_id] = @patient.id
       @patient_charges = PatientCharge.will_paginate(params[:patient_id], params[:patient_page])
-      @patient_charges_all = @patient.patient_charges.sort_by(&:date)
-      oldest_patient_charge = @patient_charges_all.first.date
-      newest_patient_charge = @patient_charges_all.last.date
-      @patient_charges_all.each do |patient_charge|
-        unless patient_charge.patient_payments.empty?
-          paid = 0
-          patient_charge.patient_payments.each do |patient_payment|
-            paid += patient_payment.amount
+      unless @patient.patient_charges.empty?
+        @patient_charges_all = @patient.patient_charges.sort_by(&:date)
+        oldest_patient_charge = @patient_charges_all.first.date
+        newest_patient_charge = @patient_charges_all.last.date
+        @patient_charges_all.each do |patient_charge|
+          unless patient_charge.patient_payments.empty?
+            paid = 0
+            patient_charge.patient_payments.each do |patient_payment|
+              paid += patient_payment.amount
+            end
+            @saldo_general_por_pagar += patient_charge.amount - paid
+          else
+            @saldo_general_por_pagar += patient_charge.amount
           end
-          @saldo_general_por_pagar += patient_charge.amount - paid
-        else
-          @saldo_general_por_pagar += patient_charge.amount
         end
       end
       @patient_charge = PatientCharge.new
@@ -274,13 +280,21 @@ class PeopleController < ApplicationController
     end
 
     unless @person.student.nil? or @person.patient.nil?
-      oldest_patient_charge < oldest_student_charge ? @oldest = oldest_patient_charge : @oldest = oldest_student_charge
-      newest_patient_charge > newest_patient_charge ? @newest = newest_patient_charge : @newest = newest_student_charge
+      if @person.student.student_charges.empty?
+        @oldest = oldest_patient_charge
+        @newest = newest_patient_charge
+      elsif @person.patient.patient_charges.empty?
+        @oldest = oldest_student_charge
+        @newest = newest_student_charge
+      else
+        oldest_patient_charge < oldest_student_charge ? @oldest = oldest_patient_charge : @oldest = oldest_student_charge
+        newest_patient_charge > newest_patient_charge ? @newest = newest_patient_charge : @newest = newest_student_charge
+      end
     else
       if @person.student.nil?
         @oldest = oldest_patient_charge
         @newest = newest_patient_charge
-      else
+      elsif @person.patient.nil?
         @oldest = oldest_student_charge
         @newest = newest_student_charge
       end
@@ -289,15 +303,17 @@ class PeopleController < ApplicationController
 #    oldest_patient_charge < oldest_student_charge ? @oldest = oldest_patient_charge : @oldest = oldest_student_charge
 #    newest_patient_charge > newest_patient_charge ? @newest = newest_patient_charge : @newest = newest_student_charge
 
-    @rank_of_months = []
-    @oldest = @oldest - (@oldest.day).day + 1.day
-    @newest = @newest - (@newest.day).day + 1.day
-    iteration_date = @newest
-    meses = "Loquesea Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre".split(" ")
+    unless @oldest.nil? or @newest.nil?
+      @rank_of_months = []
+      @oldest = @oldest - (@oldest.day).day + 1.day
+      @newest = @newest - (@newest.day).day + 1.day
+      iteration_date = @newest
+      meses = "Loquesea Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre".split(" ")
 
-    while iteration_date > @oldest
-      @rank_of_months << {value: iteration_date.strftime("%m %Y"), date: iteration_date.strftime("#{meses[iteration_date.month]} %Y")}
-      iteration_date -= 1.month
+      while iteration_date > @oldest
+        @rank_of_months << {value: iteration_date.strftime("%m %Y"), date: iteration_date.strftime("#{meses[iteration_date.month]} %Y")}
+        iteration_date -= 1.month
+      end
     end
 
   end
