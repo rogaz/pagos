@@ -1,11 +1,10 @@
 <%= link_to "<i class='icon-chevron-left'></i> Regresar".html_safe, people_charges_url(@person), :class => "btn btn-primary" %>
-<h2>Cargos del mes de <%= @month %></h2>
+<h2>Cargos de <%= @month %> de <%= @person.name %></h2>
 
-<% unless @student_charges.empty? %>
+<% unless @student_charges.nil? %>
   
   <table class="table table-striped table-bordered table-condensed">
     <tr>
-      <th>Estudiante</th>
       <th>Por pagar</th>
       <th>Pagado</th>
       <th>Cantidad</th>
@@ -20,7 +19,6 @@
 
     <% @student_charges.each do |student_charge| %>
       <tr>
-        <td><%= student_charge.student.person.name %></td>
            <%
               amount_receivable = 0
               student_charge_paid = 0
@@ -48,7 +46,7 @@
   </table>
 <% end %>
 
-<% unless @patient_charges.empty? %>
+<% unless @patient_charges.nil? %>
   <% not_liquidated = 0 %>
   <% liquidated = 0 %>
   <% amount_receivable = 0 %>
@@ -85,7 +83,6 @@
   </div>
   <table class="table table-striped table-bordered table-condensed">
     <tr>
-      <th>Estudiante</th>
       <th>Por pagar</th>
       <th>Pagado</th>
       <th>Cantidad</th>
@@ -99,7 +96,6 @@
 
     <% @patient_charges.each do |patient_charge| %>
       <tr>
-        <td><%= patient_charge.patient.person.name %></td>
            <%
               amount_receivable = 0
               patient_charge_paid = 0

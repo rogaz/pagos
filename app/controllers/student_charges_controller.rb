@@ -3,7 +3,6 @@ class StudentChargesController < ApplicationController
   # GET /student_charges.json
   def index
     if params[:category_id].nil?
-      #@student_charges = StudentCharge.all
       @student_charges_months = StudentCharge.find(:all, :order => "date DESC").group_by { |student_charge| student_charge.date.strftime("%B %Y") }
     else
       student_charges = Array.new
@@ -158,7 +157,6 @@ class StudentChargesController < ApplicationController
         format.js { render "people/apply_surcharge"}
       else
         flash[:error] = "El estudiante ya tiene recargo de este mes"
-        sleep 10
         redirect_to people_charges_url(@student_charge.student.person.id)
       end
     end

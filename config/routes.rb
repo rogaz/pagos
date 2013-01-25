@@ -27,14 +27,14 @@ Pagos::Application.routes.draw do
 
   resources :students
 
-  get "people/charges/:id" => "people#charges", :as => :people_charges
-  get "people/charges_by_month/:id/" => "people#charges_by_month", :as => :people_charges_by_month
+  get "people/:id/charges/" => "people#charges", :as => :people_charges
+  get "people/:id/charges_by_month" => "people#charges_by_month", :as => :people_charges_by_month
   resources :people
 
   resources :categories
 
-  get "student_charges/information/:category_id" => "student_charges#index", :as => :information_student_charges
-  get "patient_charges/information/:category_id" => "patient_charges#index", :as => :information_patient_charges
+  get "student_charges/:category_id/information/" => "student_charges#index", :as => :information_student_charges
+  get "patient_charges/:category_id/information/" => "patient_charges#index", :as => :information_patient_charges
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

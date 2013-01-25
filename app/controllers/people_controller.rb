@@ -307,10 +307,11 @@ class PeopleController < ApplicationController
       @rank_of_months = []
       @oldest = @oldest - (@oldest.day).day + 1.day
       @newest = @newest - (@newest.day).day + 1.day
+      @oldest = @oldest.to_date
+      @newest = @newest.to_date
       iteration_date = @newest
       meses = "Loquesea Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre".split(" ")
-
-      while iteration_date > @oldest
+      while iteration_date >= @oldest.to_date
         @rank_of_months << {value: iteration_date.strftime("%m %Y"), date: iteration_date.strftime("#{meses[iteration_date.month]} %Y")}
         iteration_date -= 1.month
       end

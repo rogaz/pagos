@@ -42,58 +42,82 @@
     </div>
   <% end %>
 
+  
   <div class="control-group">
     <%= f.label "Nombre", :class => "control-label" %>
     <div class="controls"><%= f.text_field :name %></div>
   </div>
+
+<div class="row-fluid">
+  <div class="span4">
   <% if @person.student.nil? %>
-  <div class="control-group">
-    <%= label_tag "escuela", "Escuela", :class => "control-label" %>
-    <div class="controls"><%= check_box_tag "escuela", "true" %></div>
-  </div>
-  <div class="control-group">
-    <%= label_tag "categoria", "Categoria", :class => "control-label" %>
-    <div class="controls"><%= select(:category, :id, Category.find(:all, :conditions => ["name != 'CENAAC'"]).collect {|s| [s.name, s.id]}, {:prompt => "Seleccione categoria"}) %></div>
-  </div>
-  <div class="control-group">
-    <%= label_tag "escuela_cost", "Costo de Colegiatura", :class => "control-label" %>
-    <div class="controls"><%= number_field_tag "escuela_cost", 2000 %></div>
-  </div>
+    <div class="control-group">
+      <%= label_tag "escuela", "Escuela", :class => "control-label" %>
+      <div class="controls"><%= check_box_tag "escuela", "true" %></div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "categoria", "Categoria", :class => "control-label" %>
+      <div class="controls"><%= select(:category, :id, Category.find(:all, :conditions => ["name != 'CENAAC'"]).collect {|s| [s.name, s.id]}, {:prompt => "Seleccione categoria"}) %></div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "escuela_cost", "Costo de Colegiatura", :class => "control-label" %>
+      <div class="input-prepend input-append">
+        <span class="add-on">$</span>
+        <%= number_field_tag "escuela_cost", 2000, :class => "span5", :style => "float: left" %>
+        <span class="add-on">.00</span>
+      </div>
+    </div>
   <% else %>
-  <div class="control-group">
-    <%= label_tag "escuela", "Escuela", :class => "control-label" %>
-    <div class="controls"><%= check_box_tag "escuela", "true", :checked => true  %></div>
-  </div>
-  <div class="control-group">
-    <%= label_tag "categoria", "Categoria", :class => "control-label" %>
-    <div class="controls"><%= select(:category, :id, Category.find(:all, :conditions => ["name != 'CENAAC'"]).collect {|s| [s.name, s.id]}, {:selected => @person.student.category_id}) %></div>
-  </div>
-  <div class="control-group">
-    <%= label_tag "escuela_cost", "Costo de Colegiatura", :class => "control-label" %>
-    <div class="controls"><%= number_field_tag "escuela_cost", @person.student.cost %></div>
-  </div>
+    <div class="control-group">
+      <%= label_tag "escuela", "Escuela", :class => "control-label" %>
+      <div class="controls"><%= check_box_tag "escuela", "true", :checked => true  %></div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "categoria", "Categoria", :class => "control-label" %>
+      <div class="controls"><%= select(:category, :id, Category.find(:all, :conditions => ["name != 'CENAAC'"]).collect {|s| [s.name, s.id]}, {:selected => @person.student.category_id}) %></div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "escuela_cost", "Costo de Colegiatura", :class => "control-label" %>
+      <div class="input-prepend input-append">
+        <span class="add-on">$</span>
+        <%= number_field_tag "escuela_cost", @person.student.cost, :class => "span5", :style => "float: left" %>
+        <span class="add-on">.00</span>
+      </div>
+    </div>
   <% end %>
+  </div>
 
+  <div class="span4">
   <% if @person.patient.nil? %>
-  <div class="control-group">
-    <%= label_tag "cenaac", "CENAAC", :class => "control-label" %>
-    <div class="controls"><%= check_box_tag "cenaac", "true" %></div>
-  </div>
-  <div class="control-group">
-    <%= label_tag "cenaac_cost", "Costo de Sesion", :class => "control-label" %><br />
-    <div class="controls"><%= number_field_tag "cenaac_cost", 200 %></div>
-  </div>
+    <div class="control-group">
+      <%= label_tag "cenaac", "CENAAC", :class => "control-label" %>
+      <div class="controls"><%= check_box_tag "cenaac", "true" %></div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "cenaac_cost", "Costo de Sesion", :class => "control-label" %>
+      <div class="input-prepend input-append">
+        <span class="add-on">$</span>
+        <%= number_field_tag "cenaac_cost", 200, :class => "span5", :style => "float: left" %>
+        <span class="add-on">.00</span>
+      </div>
+    </div>
   <% else %>
-  <div class="control-group">
-    <%= label_tag "cenaac", "CENAAC", :class => "control-label" %>
-    <div class="controls"><%= check_box_tag "cenaac", "true", :checked => true %></div>
-  </div>
-  <div class="control-group">
-    <%= label_tag "cenaac_cost", "Costo de Sesion", :class => "control-label" %>
-    <div class="controls"><%= number_field_tag "cenaac_cost", @person.patient.cost %></div>
-  </div>
+    <div class="control-group">
+      <%= label_tag "cenaac", "CENAAC", :class => "control-label" %>
+      <div class="controls"><%= check_box_tag "cenaac", "true", :checked => true %></div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "cenaac_cost", "Costo de Sesion", :class => "control-label" %>
+      <div class="input-prepend input-append">
+        <span class="add-on">$</span>
+        <%= number_field_tag "cenaac_cost", @person.patient.cost, :class => "span5", :style => "float: left" %>
+        <span class="add-on">.00</span>
+      </div>
+      </div>
   <% end %>
-
+  </div>
+</div>
+<br/>
   <div class="actions">
     <%= f.submit "Guardar", :class => "btn btn-success" %>
   </div>

@@ -1,3 +1,4 @@
+<%= link_to "<i class='icon-chevron-left'></i> Regresar".html_safe, people_path, :class => "btn btn-primary" %>
 <div class="row-fluid">
   <div class="span6"><h2><%= @person.name %></h2></div>
   <div class="span3">
@@ -20,13 +21,14 @@
 </div>
 <div class="well">
   <div class="span5"><h4  id="saldo_general_por_pagar">La persona debe $<%= @saldo_general_por_pagar %>.00</h4></div>
-  <div class="span5">
+  
   <% unless @rank_of_months.nil? %>
-    <%= form_tag({:controller => "people", :action => "charges_by_month"}, :method => "get") do %>
+  <div class="span5">
+    <%= form_tag({:controller => "people", :action => "charges_by_month"}, :method => "get", :class => "form-inline") do %>
       <% opciones = "" %>
       <% @rank_of_months.each {|month| opciones+="<option value='#{month[:value]}'>#{month[:date]}</option>"} %>
-      <%= select_tag("month", opciones.html_safe) %>
-      <%= submit_tag "Consutar", :class => "btn" %>
+        <%= select_tag("month", opciones.html_safe, :class => "input-medium") %>
+        <%= submit_tag "Consutar", :class => "btn" %>
     <% end %>
   <% end %>
   </div>

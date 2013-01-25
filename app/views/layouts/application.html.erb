@@ -18,8 +18,13 @@
           <li><%= link_to 'Personas', people_path %></li>
           <li><%= link_to 'Estudiantes', students_path %></li>
           <li><%= link_to 'Pacientes', patients_path %></li>
-          <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
-          <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" href="#">Cargos<b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <li><%= link_to 'Cargos de Escuela', student_charges_path %></li>
+              <li><%= link_to 'Cargos de CENAAC', patient_charges_path %></li>
+            </ul>
+          </li>
           <li><%= link_to "Cerrar Sesión", logout_path, :method => "delete" %></li>
         <% end %>
       </ul>
@@ -35,9 +40,9 @@
       </div>
     <% end %>
   <% end %>
-  <div class="container-fluid fill">
+  <div class="container-fluid">
     <div class="row-fluid">
-      <div class="span3">
+      <div class="span2">
         <div class="well sidebar-nav">
           <ul class="nav nav-list">
             <% unless !current_user_session %>
@@ -55,7 +60,7 @@
           </ul>
         </div>
       </div>
-      <div class="span9">
+      <div class="span10">
         <div class="hero-unit">
         <%= yield %>
         </div>
