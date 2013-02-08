@@ -1,8 +1,7 @@
 <%= link_to "<i class='icon-chevron-left'></i> Regresar".html_safe, people_charges_url(@person), :class => "btn btn-primary" %>
 <h2>Cargos de <%= @month %> de <%= @person.name %></h2>
 
-<% unless @student_charges.nil? %>
-  
+<% unless @student_charges.nil? or @student_charges.empty? %>
   <table class="table table-striped table-bordered table-condensed">
     <tr>
       <th>Por pagar</th>
@@ -46,7 +45,7 @@
   </table>
 <% end %>
 
-<% unless @patient_charges.nil? %>
+<% unless @patient_charges.nil? or @patient_charges.empty? %>
   <% not_liquidated = 0 %>
   <% liquidated = 0 %>
   <% amount_receivable = 0 %>
