@@ -1,3 +1,5 @@
 $("#pay_student_charge_<%= @student_charge.id %>").css("display","none");
 $("#student_charge_liquidated_<%= @student_charge.id %>").html("<i class='icon-ok'></i>");
+$("#button_apply_surcharge").css("display","none");
+$("#button_no_apply_surcharge").css("display","none");
 $("#saldo_general_por_pagar").hide().html("La persona debe $<%= saldo_general_por_pagar(@student_charge.student.person) %>.00").fadeIn(500);

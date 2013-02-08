@@ -143,7 +143,7 @@ class StudentChargesController < ApplicationController
 
   def apply_surcharge
     @student_charge = StudentCharge.find params[:student_charge_id]
-    unless @student_charge.surcharge
+    if @student_charge.surcharge == false and @student_charge.liquidated == "no"
       @student_charge.surcharge = true
       @student_charge.amount = (@student_charge.amount * 1.10)
       @student_charge.save
@@ -164,7 +164,7 @@ class StudentChargesController < ApplicationController
 
   def no_apply_surcharge
     @student_charge = StudentCharge.find params[:student_charge_id]
-    if @student_charge.surcharge
+    if @student_charge.surcharge == true and @student_charge.liquidated == "no"
       @student_charge.surcharge = false
       @student_charge.amount = @student_charge.student.cost
       @student_charge.save
