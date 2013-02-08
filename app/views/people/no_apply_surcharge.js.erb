@@ -1,5 +1,5 @@
 $("#student_charge_amount_<%= @student_charge.id %>").text("$<%= @student_charge.amount %>.00");
-$("#student_charge_surcharge_<%= @student_charge.id %>").html("<i class='icon-star'></i>");
-$("#button_apply_surcharge").css("display","none");
-$("#button_no_apply_surcharge").fadeIn(1000);
+$("#student_charge_surcharge_<%= @student_charge.id %>").html("<i class='icon-remove-sign'></i>");
+$("#button_apply_surcharge").fadeIn(1000);
+$("#button_no_apply_surcharge").css("display","none");
 $("#saldo_general_por_pagar").hide().html("La persona debe $<%= saldo_general_por_pagar(@student_charge.student.person) %>.00").fadeIn(500);

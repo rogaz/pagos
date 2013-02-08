@@ -11,6 +11,10 @@
         <% unless cargo.nil? %>
           <% if cargo.liquidated ==  "no" and cargo.surcharge == false %>
             <%= link_to 'Aplicar Recargo', apply_surcharge_url(cargo.id), :method => :put, :remote => true, :class => "btn", :id => "button_apply_surcharge" %>
+            <%= link_to 'Quitar Recargo', no_apply_surcharge_url(cargo.id), :method => :put, :remote => true, :class => "btn", :id => "button_no_apply_surcharge", :style => "display: none;" %>
+          <% elsif cargo.liquidated == "no" and cargo.surcharge == true %>
+            <%= link_to 'Aplicar Recargo', apply_surcharge_url(cargo.id), :method => :put, :remote => true, :class => "btn", :id => "button_apply_surcharge", :style => "display: none;" %>
+            <%= link_to 'Quitar Recargo', no_apply_surcharge_url(cargo.id), :method => :put, :remote => true, :class => "btn", :id => "button_no_apply_surcharge" %>
           <% end %>
         <% end %>
       <% end %>
