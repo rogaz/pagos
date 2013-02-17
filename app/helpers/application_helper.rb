@@ -7,4 +7,12 @@ module ApplicationHelper
       return fecha
     end
   end
+  
+  def traduce_month(month_and_year)
+    a = "january february march april may june july august september october november december".split()
+    b = "enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre".split()
+    month = month_and_year.split()[0]
+    year = " " + month_and_year.split()[1]
+    return b[a.index(month.downcase)].capitalize + year
+  end
 end

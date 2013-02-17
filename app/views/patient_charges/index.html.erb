@@ -1,7 +1,7 @@
 <script type="text/javascript">
   $('.carousel').carousel();
 </script>
-
+<%= link_to "<i class='icon-chevron-left'></i> Ir a Categorías".html_safe, categories_path, :class => "btn btn-primary" %>
 <% bandera = false %>
 <div id="patient_charges" class="carousel slide">
   <% if @category.nil? %>
@@ -9,7 +9,6 @@
   <% else %>
     <div class="row-fluid">
       <div class="span8"><h2>Información de <%= @category.name %></h2></div>
-      <div class="span3"><%= link_to 'Categorias', categories_path, :class => "btn" %></div>
     </div>
   <% end %>
   <div class="carousel-inner">
@@ -24,7 +23,7 @@
       <% end %>
 
       <% bandera = true if !bandera %>
-      <h2><%= month %></h2>
+      <h2><%= traduce_month(month) %></h2>
       <% patient_charges.each do |patient_charge| %>
         <% patient_charge_paid = 0 %>
         <% if patient_charge.liquidated == "no"
