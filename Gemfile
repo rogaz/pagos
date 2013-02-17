@@ -10,7 +10,7 @@ gem 'authlogic'
 
 gem 'pg'
 
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 2.0.4.0'
 
 gem 'unicorn-rails'
 
