@@ -357,5 +357,5 @@ class PeopleController < ApplicationController
       @patient_charges = @person.patient.patient_charges.find(:all, :conditions => ['EXTRACT(MONTH from date) = ? AND EXTRACT(YEAR from date) = ?', month[0], month[1]])
     end
   end
-
+  
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121123015632) do
+ActiveRecord::Schema.define(:version => 20130218004920) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -58,9 +58,10 @@ ActiveRecord::Schema.define(:version => 20121123015632) do
     t.string   "description"
     t.datetime "date"
     t.integer  "student_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.boolean  "surcharge"
+    t.integer  "original_amount"
   end
 
   create_table "student_payments", :force => true do |t|

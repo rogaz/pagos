@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate
 
   helper_method :current_user_session, :current_user
+  
+  @@people_path = "#{Rails.root}/pdfs/people/"
 
   protected
     def current_user_session

@@ -23,6 +23,7 @@ Pagos::Application.routes.draw do
   put "people/no_apply_surcharge/:student_charge_id" => "student_charges#no_apply_surcharge", :as => :no_apply_surcharge
 
   resources :student_charges
+  get "student_charge/:id/download" => "student_charges#download"
 
   resources :patients
 
