@@ -12,6 +12,7 @@ class CategoriesController < ApplicationController
         if student.student_charges.where('extract(month from date) = ?', fecha_actual.month).empty?
           @student_charge = StudentCharge.new
           @student_charge.amount = student.cost
+          @student_charge.original_amount = student.cost
           @student_charge.liquidated = "no"
           @student_charge.description = "Colegiatura #{Time.now.month} #{Time.now.year}"
           @student_charge.date = Time.now-7.hour

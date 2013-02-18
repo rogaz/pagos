@@ -14,6 +14,8 @@ gem 'bootstrap-sass', '~> 2.0.4.0'
 
 gem 'unicorn-rails'
 
+gem 'prawn_rails'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

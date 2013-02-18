@@ -166,7 +166,7 @@ class StudentChargesController < ApplicationController
     @student_charge = StudentCharge.find params[:student_charge_id]
     if @student_charge.surcharge == true and @student_charge.liquidated == "no"
       @student_charge.surcharge = false
-      @student_charge.amount = @student_charge.student.cost
+      @student_charge.amount = @student_charge.original_amount
       @student_charge.save
       bandera = false
     else

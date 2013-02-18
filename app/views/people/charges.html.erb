@@ -9,10 +9,10 @@
       <% unless @person.student.nil? %>
         <% cargo = @person.student.student_charges.where('extract(month from date) = ?', fecha_actual.month).first %>
         <% unless cargo.nil? %>
-          <% if cargo.liquidated ==  "no" and cargo.surcharge == false %>
+          <% if cargo.liquidated ==  "no" and cargo.surcharge == false and cargo.student_payments.empty? %>
             <%= link_to 'Aplicar Recargo', apply_surcharge_url(cargo.id), :method => :put, :remote => true, :class => "btn", :id => "button_apply_surcharge" %>
             <%= link_to 'Quitar Recargo', no_apply_surcharge_url(cargo.id), :method => :put, :remote => true, :class => "btn", :id => "button_no_apply_surcharge", :style => "display: none;" %>
-          <% elsif cargo.liquidated == "no" and cargo.surcharge == true %>
+          <% elsif cargo.liquidated == "no" and cargo.surcharge == true and cargo.student_payments.empty? %>
             <%= link_to 'Aplicar Recargo', apply_surcharge_url(cargo.id), :method => :put, :remote => true, :class => "btn", :id => "button_apply_surcharge", :style => "display: none;" %>
             <%= link_to 'Quitar Recargo', no_apply_surcharge_url(cargo.id), :method => :put, :remote => true, :class => "btn", :id => "button_no_apply_surcharge" %>
           <% end %>

@@ -19,6 +19,7 @@ class Student < ActiveRecord::Base
       @student_charge = StudentCharge.new
       proporcional = (self.cost/30.to_f) * (30-fecha_actual.day)
       @student_charge.amount = proporcional
+      @student_charge.original_amount = proporcional
       @student_charge.liquidated = "no"
       @student_charge.description = "Proporcional de Colegiatura #{Time.now.month} #{Time.now.year}"
       @student_charge.date = Time.now-7.hour
