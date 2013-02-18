@@ -46,6 +46,7 @@
       <tr>
         <th></th>
         <th></th>
+        <th>Archivo</th>
         <th>Cantidad</th>
         <th>Recargo</th>
         <th>Liquidado</th>
@@ -73,6 +74,7 @@
           </td>
           <!--<td><%= link_to 'Pagar', student_charge %></td>-->
           <td><%= link_to 'Abonar', student_charge %></td>
+          <td><%= link_to "<i class='icon-list-alt'></i>".html_safe, :controller => :student_charges, :action => :download, :id => student_charge.id %></td>
           <td id="student_charge_amount_<%= student_charge.id %>">$<%= student_charge.amount %>.00</td>
           <td id="student_charge_surcharge_<%= student_charge.id %>"><%= student_charge.surcharge ? "<i class='icon-star'></i>".html_safe : "<i class='icon-remove-sign'></i>".html_safe %></td>
           <td id="student_charge_liquidated_<%= student_charge.id %>"><% unless student_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>

@@ -15,18 +15,33 @@ class StudentCharge < ActiveRecord::Base
   end
   
   @@people_url = "#{Rails.root}/pdfs/people/"
+  
+  def get_path
+    return @@people_url + self.student.person.id.to_s + "/student_charge" + self.id.to_s + ".pdf"
+  end
+  
   def generate_pdf
     pdf = Prawn::Document.new
-    
-    #pdf.stroke_axis
-    width = 100
-    height = 50
-    x = 50
-    y = 200
-    pdf.stroke_rectangle [x, y], width, height
-    pdf.text_box "Monto #{self.amount}", :at => [x + 10, y - 10], :width => width - 20
-    
-    
+    pdf.font_size(25)
+    pdf.text "Centro a Atencion a las Alteraciones del Aprendizaje y la Comunicacion S.C.", :align => :center
+    pdf.font_size(18)
+    pdf.move_down 10
+    pdf.image "pdfs/cenaac.jpg", :position => :center
+    pdf.move_down 30
+    pdf.text self.student.person.name, :align => :center
+    width = 120
+    height = 20
+    x = 160
+    y = 450
+    pdf.font_size(14)
+    pdf.stroke_rectangle([x-5 ,y+5], width*2, height*2)
+    pdf.text_box "Cantidad", :at => [x, y], :width => width, :height => height
+    pdf.text_box "$#{self.amount}.00", :at => [x+width, y], :width => width, :height => height
+    pdf.text_box "Fecha", :at => [x, y-height], :width => width, :height => height
+    pdf.text_box self.date.strftime("%d %b %Y"), :at => [x+width, y-height], :width => width, :height => height
+#    data = [["Cantidad", "$#{self.amount}.00"]]
+#    data += [["Fecha", self.date.strftime("%d %b %Y")]]
+#    pdf.table data, :row_colors => ["F0F0F0", "FFFFCC"]
     pdf.render_file("#{@@people_url}#{self.student.person.id}/student_charge#{self.id}.pdf")
   end
   

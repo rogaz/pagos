@@ -183,4 +183,9 @@ class StudentChargesController < ApplicationController
     end
   end
 
+  def download
+    @student_charge = StudentCharge.find params[:id]
+    send_file @student_charge.get_path
+  end
+
 end
