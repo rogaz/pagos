@@ -1,7 +1,8 @@
 class Student < ActiveRecord::Base
   attr_accessible :category_id, :person_id, :cost
 
-  after_create :colegiatura_proporcional
+  after_create :create_directory, :colegiatura_proporcional
+  after_destroy :destroy_directory
 
   belongs_to :category
   belongs_to :person
@@ -27,6 +28,16 @@ class Student < ActiveRecord::Base
       @student_charge.surcharge = false
       @student_charge.save
     end
-    
   end
+
+  @@people_url = "#{Rails.root}/pdfs/people/"
+
+  def create_directory
+    Dir.mkdir "#{@@people_url}#{self.person.id}/student_charges/"
+  end
+
+  def destroy_directory
+    FileUtils.rm_rf "#{@@people_url}#{self.person.id}/student_charges/"
+  end
+
 end

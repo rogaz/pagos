@@ -169,4 +169,9 @@ class PatientChargesController < ApplicationController
     end
   end
 
+  def download
+    @patient_charge = PatientCharge.find params[:id]
+    send_file @patient_charge.get_path
+  end
+
 end

@@ -107,6 +107,7 @@
       <tr>
         <th></th>
         <th></th>
+        <th>Archivo</th>
         <th>Cantidad</th>
         <th>Liquidado</th>
         <th>Descripción</th>
@@ -132,6 +133,7 @@
             <% end %>
           </td>
           <td><%= link_to 'Abonar', patient_charge %></td>
+          <td><%= link_to "<i class='icon-list-alt'></i>".html_safe, :controller => :patient_charges, :action => :download, :id => patient_charge.id %></td>
           <td>$<%= patient_charge.amount %>.00</td>
           <td id="patient_charge_liquidated_<%= patient_charge.id %>"><% unless patient_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
           <td><%= patient_charge.description %></td>
