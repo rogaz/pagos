@@ -17,10 +17,13 @@ class StudentCharge < ActiveRecord::Base
   @@people_url = "#{Rails.root}/pdfs/people/"
   
   def get_path
-    return @@people_url + self.student.person.id.to_s + "/student_charges/student_charge" + self.id.to_s + ".pdf"
+    directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
+    return @@people_url + self.student.person.id.to_s + "/student_charges/#{directory_date}/cargo_colegiatura_#{self.id.to_s}.pdf"
   end
   
   def generate_pdf
+    directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
+    Dir.mkdir "#{@@people_url}#{self.student.person.id}/student_charges/#{directory_date}"
     pdf = Prawn::Document.new
     pdf.font_size(25)
     pdf.text "Centro a Atencion a las Alteraciones del Aprendizaje y la Comunicacion S.C.", :align => :center
@@ -48,51 +51,12 @@ class StudentCharge < ActiveRecord::Base
 #    data = [["Cantidad", "$#{self.amount}.00"]]
 #    data += [["Fecha", self.date.strftime("%d %b %Y")]]
 #    pdf.table data, :row_colors => ["F0F0F0", "FFFFCC"]
-    pdf.render_file("#{@@people_url}#{self.student.person.id}/student_charges/student_charge#{self.id}.pdf")
+    pdf.render_file("#{@@people_url}#{self.student.person.id}/student_charges/#{directory_date}/cargo_colegiatura_#{self.id}.pdf")
   end
   
   def destroy_file
-    FileUtils.rm "#{@@people_url}#{self.student.person.id}/student_charges/student_charge#{self.id}.pdf"
+    directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
+    FileUtils.rm_rf "#{@@people_url}#{self.student.person.id}/student_charges/#{directory_date}"
   end
 
 end
-
-=begin
-# Assignment
-pdf = Prawn::Document.new
-pdf.text "Hello World"
-pdf.render_file "assignment.pdf"
-# Implicit Block
-Prawn::Document.generate("implicit.pdf") do
-text "Hello World"
-end
-# Explicit Block
-Prawn::Document.generate("explicit.pdf") do |pdf|
-pdf.text "Hello World"
-end
-
-
-stroke_axis
-width = 100
-height = 50
-x = 50
-y = 200
-stroke_rectangle [x, y], width, height
-text_box "reference rectangle", :at => [x + 10, y - 10], :width => width - 20
-scale(2, :origin => [x, y]) do
-stroke_rectangle [x, y], width, height
-text_box "rectangle scaled from upper-left corner",
-:at => [x, y - height - 5], :width => width
-end
-x = 350
-stroke_rectangle [x, y], width, height
-text_box "reference rectangle", :at => [x + 10, y - 10], :width => width - 20
-scale(2, :origin => [x + width / 2, y - height / 2]) do
-stroke_rectangle [x, y], width, height
-text_box "rectangle scaled from center",
-:at => [x, y - height - 5], :width => width
-end
-
-
-
-=end
