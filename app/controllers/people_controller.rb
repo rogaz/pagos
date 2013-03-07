@@ -209,9 +209,9 @@ class PeopleController < ApplicationController
         if student_tiene_cargos and !patient_tiene_cargos
           flash[:notice] = "La persona #{@person.name} tiene cargos de Colegiatura"
         elsif !student_tiene_cargos and patient_tiene_cargos
-          flash[:notice] = "El persona #{@person.name} tiene cargos de Sesion"
+          flash[:notice] = "La persona #{@person.name} tiene cargos de Sesion"
         elsif student_tiene_cargos and patient_tiene_cargos
-          flash[:notice] = "El persona #{@person.name} tiene cargos de Colegiatura y de Sesion"
+          flash[:notice] = "La persona #{@person.name} tiene cargos de Colegiatura y de Sesion"
         end
         format.html { redirect_to people_charges_path(@person) }
       end

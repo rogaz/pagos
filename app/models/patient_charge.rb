@@ -55,7 +55,7 @@ class PatientCharge < ActiveRecord::Base
 
   def destroy_file
     directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
-    FileUtils.rm "#{@@people_url}#{self.patient.person.id}/patient_charges/#{directory_date}/cargo_sesion_#{self.id}.pdf"
+    FileUtils.rm_rf "#{@@people_url}#{self.patient.person.id}/patient_charges/#{directory_date}"
   end
 
 end

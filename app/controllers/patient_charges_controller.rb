@@ -6,8 +6,10 @@ class PatientChargesController < ApplicationController
       #@patient_charges = PatientCharge.find(:all)
       @patient_charges_months = PatientCharge.find(:all, :order => "date DESC").group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
     else
-      patient_charges = Array.new
+      #patient_charges = Array.new
       @category = Category.find params[:category_id]
+      @patient_charges_months = PatientCharge.find(:all, :order => "date DESC").group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
+=begin
       unless @category.patients.empty?
         @category.patients.each do |patient|
           unless patient.patient_charges.empty?
@@ -22,7 +24,9 @@ class PatientChargesController < ApplicationController
       else
         @patient_charges_months = Array.new
       end
+=end
     end
+
 
     respond_to do |format|
       format.html # index.html.erb
