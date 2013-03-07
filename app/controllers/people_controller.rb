@@ -76,7 +76,7 @@ class PeopleController < ApplicationController
           @patient.save
         end
         flash[:notice] = 'Persona guardada correctamente.'
-        format.html { redirect_to @person }
+        format.html { redirect_to people_charges_url(@person) }
         format.json { render json: @person, status: :created, location: @person }
       else
         flash[:notice] = "La persona debe estar en CENAAC o escuela" if !escuelaocenaac
@@ -170,7 +170,7 @@ class PeopleController < ApplicationController
       if escuelaocenaac and categoria_seleccionada and correct_esc_cost and correct_cenaac_cost and !student_tiene_cargos and !patient_tiene_cargos
         @person.update_attributes(params[:person])
         flash[:notice] = 'Persona correctamente actualizada'
-        format.html { redirect_to @person }#people_path }
+        format.html { redirect_to people_charges_url(@person) }
         format.json { head :no_content }
       else
         flash[:notice] = "La persona debe estar en CENAAC o escuela" if !escuelaocenaac
