@@ -3,7 +3,11 @@ module ApplicationHelper
     unless fecha == nil
       meses = "Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre".split(" ")
       mes = meses[fecha.month-1]
-      fecha = fecha.day.to_s + " " + mes + " " + fecha.year.to_s + " " + fecha.hour.to_s+":" +fecha.min.to_s
+      if fecha.respond_to?(:hour)
+        fecha = fecha.day.to_s + " " + mes + " " + fecha.year.to_s + " " + fecha.hour.to_s+":" +fecha.min.to_s
+      else
+        fecha = fecha.day.to_s + " " + mes + " " + fecha.year.to_s
+      end
       return fecha
     end
   end

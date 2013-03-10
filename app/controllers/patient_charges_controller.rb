@@ -104,7 +104,7 @@ class PatientChargesController < ApplicationController
         format.html { redirect_to people_charges_path(@patient_charge.patient.person), notice: 'Cargo de Sesion Guardado Correctamente' }
         format.json { render json: @patient_charge, status: :created, location: @patient_charge }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to people_charges_path(@patient_charge.patient.person), notice: 'No se guardo cargo!' }
         format.json { render json: @patient_charge.errors, status: :unprocessable_entity }
       end
     end

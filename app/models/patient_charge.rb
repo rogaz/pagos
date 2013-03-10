@@ -1,5 +1,7 @@
 class PatientCharge < ActiveRecord::Base
-  attr_accessible :amount, :date, :description, :liquidated, :patient_id
+  attr_accessible :amount, :date, :description, :liquidated, :patient_id, :session_date
+
+  validates :session_date, :presence => true
 
   after_create :generate_pdf
   after_destroy :destroy_file
@@ -9,7 +11,7 @@ class PatientCharge < ActiveRecord::Base
   default_scope :order => 'patient_charges.date DESC'
 
   def self.will_paginate(patient_id, page)
-    paginate :per_page => 5, :page => page,
+    paginate :per_page => 30, :page => page,
       :conditions => ['patient_id = ?', patient_id]
   end
 

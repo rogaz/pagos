@@ -111,6 +111,7 @@
         <th>Cantidad</th>
         <th>Liquidado</th>
         <th>Descripción</th>
+        <th>Fecha de Sesión</th>
         <th>Fecha</th>
         <!--<th></th>-->
         <th></th>
@@ -137,6 +138,7 @@
           <td>$<%= patient_charge.amount %>.00</td>
           <td id="patient_charge_liquidated_<%= patient_charge.id %>"><% unless patient_charge.liquidated == "si" %><i class="icon-remove"></i><% else %><i class="icon-ok"></i><% end %></td>
           <td><%= patient_charge.description %></td>
+          <td><%= date_with_format(patient_charge.session_date) %></td>
           <td><%= date_with_format(patient_charge.date) %></td>
           <!--<td><%= link_to 'Editar', edit_patient_charge_path(patient_charge) %></td>-->
           <td><%= link_to 'Eliminar', patient_charge, method: :delete, data: { confirm: "¿Desea eliminar cargo de $#{patient_charge.amount}.00?" } %></td>
