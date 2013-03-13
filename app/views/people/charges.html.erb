@@ -24,7 +24,7 @@
   <div class="span1"><%= link_to 'Eliminar', @person, method: :delete, data: { confirm: "¿Esta seguro que quiere eliminar a #{@person.name}?" }, :class => "btn btn-danger" %></div>
 </div>
 <div class="well">
-  <div class="span5"><h4  id="saldo_general_por_pagar">La persona debe $<%= @saldo_general_por_pagar %>.00</h4></div>
+  <div class="span5"><h4  id="saldo_general_por_pagar">$<%= @saldo_general_por_pagar %>.00</h4></div>
   
   <% unless @rank_of_months.nil? %>
   <div class="span5">

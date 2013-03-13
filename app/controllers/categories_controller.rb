@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
           @student_charge.original_amount = student.cost
           @student_charge.liquidated = "no"
           @student_charge.description = "Colegiatura #{Time.now.month} #{Time.now.year}"
-          @student_charge.date = Time.now-7.hour
+          @student_charge.date = Time.now
           @student_charge.student_id = student.id
           @student_charge.surcharge = false
           @student_charge.save

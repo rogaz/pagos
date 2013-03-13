@@ -96,7 +96,7 @@ class PatientChargesController < ApplicationController
     @patient = Patient.find params[:patient_charge][:patient_id]
     @patient_charge.amount = @patient.cost
     @patient_charge.liquidated = "no"
-    @patient_charge.date = Time.now-7.hour
+    @patient_charge.date = Time.now
     @patient_charge.patient_id = @patient.id
 
     respond_to do |format|

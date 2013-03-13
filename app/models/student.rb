@@ -15,7 +15,7 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :person
 
   def colegiatura_proporcional
-    fecha_actual = Time.now-7.hour
+    fecha_actual = Time.now
     if fecha_actual.day < 30
       @student_charge = StudentCharge.new
       proporcional = (self.cost/30.to_f) * (30-fecha_actual.day)
@@ -23,7 +23,7 @@ class Student < ActiveRecord::Base
       @student_charge.original_amount = proporcional
       @student_charge.liquidated = "no"
       @student_charge.description = "Proporcional de Colegiatura #{Time.now.month} #{Time.now.year}"
-      @student_charge.date = Time.now-7.hour
+      @student_charge.date = Time.now
       @student_charge.student_id = self.id
       @student_charge.surcharge = false
       @student_charge.save
