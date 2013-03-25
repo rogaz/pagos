@@ -93,7 +93,7 @@
 
 <% unless @patient.nil? %>
   <% if @patient.patient_charges.empty? %>
-    <p><h4>No tiene cargos de CENAAC</h4</p><br/><br/>
+    <p><h4>No tiene cargos de CENAAC</h4></p><br/><br/>
     <a data-toggle="modal" href="#new_patient_charge_<%= @patient.id %>" class="btn" type="button">Nueva sesión</a>
       <%= render "people/patient" %>
   <% else %>

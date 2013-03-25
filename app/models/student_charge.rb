@@ -1,13 +1,13 @@
 class StudentCharge < ActiveRecord::Base
   
-  after_create :generate_pdf
-  after_destroy :destroy_file
-  
   attr_accessible :amount, :original_amount, :date, :description, :liquidated, :student_id, :surcharge
 
   belongs_to :student
   has_many :student_payments, :dependent => :destroy
   default_scope :order => 'student_charges.date DESC'
+
+  after_create :generate_pdf
+  after_destroy :destroy_file
 
   def self.will_paginate(student_id, page)
     paginate :per_page => 3, :page => page,
@@ -17,12 +17,12 @@ class StudentCharge < ActiveRecord::Base
   @@people_url = "#{Rails.root}/pdfs/people/"
   
   def get_path
-    directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
-    return @@people_url + self.student.person.id.to_s + "/student_charges/#{directory_date}/cargo_colegiatura_#{self.id.to_s}.pdf"
+    directory_date = "#{self.date.strftime('%d-%m-%y')}-#{self.id}"
+    @@people_url + self.student.person.id.to_s + "/student_charges/#{directory_date}/cargo_colegiatura_#{self.id.to_s}.pdf"
   end
   
   def generate_pdf
-    directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
+    directory_date = "#{self.date.strftime('%d-%m-%y')}-#{self.id}"
     Dir.mkdir "#{@@people_url}#{self.student.person.id}/student_charges/#{directory_date}"
     pdf = Prawn::Document.new
     pdf.font_size(25)
@@ -55,7 +55,7 @@ class StudentCharge < ActiveRecord::Base
   end
   
   def destroy_file
-    directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
+    directory_date = "#{self.date.strftime('%d-%m-%y')}-#{self.id}"
     FileUtils.rm_rf "#{@@people_url}#{self.student.person.id}/student_charges/#{directory_date}"
   end
 

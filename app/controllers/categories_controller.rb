@@ -10,11 +10,13 @@ class CategoriesController < ApplicationController
       @students = Student.all
       @students.each do |student|
         if student.student_charges.where('extract(month from date) = ?', fecha_actual.month).empty?
+          meses = "Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre".split(" ")
+          mes = meses[Time.now.month-1]
           @student_charge = StudentCharge.new
           @student_charge.amount = student.cost
           @student_charge.original_amount = student.cost
           @student_charge.liquidated = "no"
-          @student_charge.description = "Colegiatura #{Time.now.month} #{Time.now.year}"
+          @student_charge.description = "Colegiatura #{Time.now.strftime("#{mes} %y")}"
           @student_charge.date = Time.now
           @student_charge.student_id = student.id
           @student_charge.surcharge = false

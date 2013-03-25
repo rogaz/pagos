@@ -4,11 +4,11 @@ class PatientChargesController < ApplicationController
   def index
     if params[:category_id].nil?
       #@patient_charges = PatientCharge.find(:all)
-      @patient_charges_months = PatientCharge.find(:all, :order => "date DESC").group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
+      @patient_charges_months = PatientCharge.order('date DESC').group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
     else
       #patient_charges = Array.new
       @category = Category.find params[:category_id]
-      @patient_charges_months = PatientCharge.find(:all, :order => "date DESC").group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
+      @patient_charges_months = PatientCharge.order('date DESC').group_by { |patient_charge| patient_charge.date.strftime("%B %Y") }
 =begin
       unless @category.patients.empty?
         @category.patients.each do |patient|

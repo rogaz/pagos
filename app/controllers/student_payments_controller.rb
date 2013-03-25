@@ -104,4 +104,10 @@ class StudentPaymentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def download
+    @student_payment = StudentPayment.find params[:id]
+    send_file @student_payment.get_path
+  end
+
 end

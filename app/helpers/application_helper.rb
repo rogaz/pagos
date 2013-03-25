@@ -4,7 +4,7 @@ module ApplicationHelper
       meses = "Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre".split(" ")
       mes = meses[fecha.month-1]
       if fecha.respond_to?(:hour)
-        fecha = fecha.day.to_s + " " + mes + " " + fecha.year.to_s + " " + fecha.hour.to_s+":" +fecha.min.to_s
+        fecha = fecha.strftime("%d-#{mes}-%y %I:%M %p")
       else
         fecha = fecha.day.to_s + " " + mes + " " + fecha.year.to_s
       end

@@ -18,12 +18,12 @@ class PatientCharge < ActiveRecord::Base
   @@people_url = "#{Rails.root}/pdfs/people/"
 
   def get_path
-    directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
+    directory_date = "#{self.date.strftime('%d-%m-%y')}-#{self.id}"
     return @@people_url + self.patient.person.id.to_s + "/patient_charges/#{directory_date}/cargo_sesion_#{self.id.to_s}.pdf"
   end
 
   def generate_pdf
-    directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
+    directory_date = "#{self.date.strftime('%d-%m-%y')}-#{self.id}"
     Dir.mkdir "#{@@people_url}#{self.patient.person.id}/patient_charges/#{directory_date}"
     pdf = Prawn::Document.new
     pdf.font_size(25)
@@ -49,14 +49,11 @@ class PatientCharge < ActiveRecord::Base
     pdf.stroke
     pdf.text_box "Fecha", :at => [x, y-(height*2)], :width => width, :height => height
     pdf.text_box self.date.strftime("%d %b %Y"), :at => [x+width, y-(height*2)], :width => width, :height => height
-#    data = [["Cantidad", "$#{self.amount}.00"]]
-#    data += [["Fecha", self.date.strftime("%d %b %Y")]]
-#    pdf.table data, :row_colors => ["F0F0F0", "FFFFCC"]
     pdf.render_file("#{@@people_url}#{self.patient.person.id}/patient_charges/#{directory_date}/cargo_sesion_#{self.id}.pdf")
   end
 
   def destroy_file
-    directory_date = "#{self.date.day}-#{self.date.month}-#{self.date.year}-#{self.id}"
+    directory_date = "#{self.date.strftime('%d-%m-%y')}-#{self.id}"
     FileUtils.rm_rf "#{@@people_url}#{self.patient.person.id}/patient_charges/#{directory_date}"
   end
 

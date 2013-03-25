@@ -8,6 +8,7 @@ Pagos::Application.routes.draw do
   resources :users
 
   resources :student_payments
+  get 'student_payment/:id/download' => 'student_payments#download'
 
   resources :patient_payments
 

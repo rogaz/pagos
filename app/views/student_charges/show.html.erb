@@ -76,6 +76,7 @@
 
         <% @student_payments.each do |student_payment| %>
           <tr>
+            <td><%= link_to "<i class='icon-list-alt'></i>".html_safe, :controller => :student_payments, :action => :download, :id => student_payment.id %></td>
             <td>$<%= student_payment.amount %>.00</td>
             <td><%= date_with_format(student_payment.date) %></td>
             <!--<td><%= link_to 'Show', student_payment %></td>
