@@ -59,7 +59,7 @@ module Pagos
     #config.assets.initialize_on_precompile = false
 
     config.time_zone = 'Chihuahua'
-    config.active_record.default_timezone = 'Chihuahua'
+    #config.active_record.default_timezone = 'Chihuahua'
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

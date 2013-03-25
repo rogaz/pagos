@@ -103,4 +103,10 @@ class PatientPaymentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def download
+    @patient_payment = PatientPayment.find(params[:id])
+    send_file @patient_payment.get_path
+  end
+
 end

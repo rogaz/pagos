@@ -1,9 +1,9 @@
 Pagos::Application.routes.draw do
   resource  :user_session, :only => [:new, :create, :destroy]
 
-  delete "logout" => "user_sessions#destroy", :as => :logout
+  delete 'logout' => 'user_sessions#destroy', :as => :logout
 
-  match "sign_in" => "User_sessions#new", :as => "signin"
+  match 'sign_in' => 'User_sessions#new', :as => 'signin'
 
   resources :users
 
@@ -11,34 +11,35 @@ Pagos::Application.routes.draw do
   get 'student_payment/:id/download' => 'student_payments#download'
 
   resources :patient_payments
+  get 'patient_payment/:id/download' => 'patient_payments#download'
 
-  root :to => "Categories#index"
+  root :to => 'Categories#index'
 
-  post "pay_patient_charge/:patient_charge_id" => "patient_charges#pay_patient_charge", :as => :pay_patient_charge
+  post 'pay_patient_charge/:patient_charge_id' => 'patient_charges#pay_patient_charge', :as => :pay_patient_charge
 
   resources :patient_charges
-  get "patient_charge/:id/download" => "patient_charges#download"
+  get 'patient_charge/:id/download' => 'patient_charges#download'
 
-  post "pay_student_charge/:student_charge_id" => "student_charges#pay_student_charge", :as => :pay_student_charge
+  post 'pay_student_charge/:student_charge_id' => 'student_charges#pay_student_charge', :as => :pay_student_charge
 
-  put "people/apply_surcharge/:student_charge_id" => "student_charges#apply_surcharge", :as => :apply_surcharge
-  put "people/no_apply_surcharge/:student_charge_id" => "student_charges#no_apply_surcharge", :as => :no_apply_surcharge
+  put 'people/apply_surcharge/:student_charge_id' => 'student_charges#apply_surcharge', :as => :apply_surcharge
+  put 'people/no_apply_surcharge/:student_charge_id' => 'student_charges#no_apply_surcharge', :as => :no_apply_surcharge
 
   resources :student_charges
-  get "student_charge/:id/download" => "student_charges#download"
+  get 'student_charge/:id/download' => 'student_charges#download'
 
   resources :patients
 
   resources :students
 
-  get "people/:id/charges/" => "people#charges", :as => :people_charges
-  get "people/:id/charges_by_month" => "people#charges_by_month", :as => :people_charges_by_month
+  get 'people/:id/charges/' => 'people#charges', :as => :people_charges
+  get 'people/:id/charges_by_month' => 'people#charges_by_month', :as => :people_charges_by_month
   resources :people
 
   resources :categories
 
-  get "student_charges/:category_id/information/" => "student_charges#index", :as => :information_student_charges
-  get "patient_charges/:category_id/information/" => "patient_charges#index", :as => :information_patient_charges
+  get 'student_charges/:category_id/information/' => 'student_charges#index', :as => :information_student_charges
+  get 'patient_charges/:category_id/information/' => 'patient_charges#index', :as => :information_patient_charges
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

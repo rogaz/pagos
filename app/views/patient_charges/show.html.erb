@@ -61,6 +61,7 @@
 
       <table  class="table table-striped table-bordered table-condensed">
         <tr>
+          <th>Archivo</th>
           <th>Cantidad</th>
           <th>Fecha</th>
           <th></th>
@@ -70,6 +71,7 @@
 
         <% @patient_payments.each do |patient_payment| %>
           <tr>
+            <td><%= link_to "<i class='icon-list-alt'></i>".html_safe, :controller => :patient_payments, :action => :download, :id => patient_payment.id %></td>
             <td>$<%= patient_payment.amount %>.00</td>
             <td><%= date_with_format(patient_payment.date) %></td>
             <!--<td><%= link_to 'Show', patient_payment %></td>
