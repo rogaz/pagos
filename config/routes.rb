@@ -1,4 +1,7 @@
 Pagos::Application.routes.draw do
+  resources :plans
+
+
   resource  :user_session, :only => [:new, :create, :destroy]
 
   delete 'logout' => 'user_sessions#destroy', :as => :logout
@@ -37,6 +40,7 @@ Pagos::Application.routes.draw do
   resources :people
 
   resources :categories
+  post 'student_charges/generate_charges' => 'student_charges#generate_charges', :as => :generate_charges
 
   get 'student_charges/:category_id/information/' => 'student_charges#index', :as => :information_student_charges
   get 'patient_charges/:category_id/information/' => 'patient_charges#index', :as => :information_patient_charges

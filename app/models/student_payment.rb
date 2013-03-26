@@ -53,8 +53,8 @@ class StudentPayment < ActiveRecord::Base
     total = 0
     total = self.student_charge.amount - payed
     total -= self.amount
-    pdf.text_box 'Adeudo', :at => [x+width-50, y-((height)*(self.student_charge.student_payments.count+1))], :width => width, :height => height
-    pdf.text_box "#{total}.00", :at => [x+width, y-((height)*(self.student_charge.student_payments.count+1))], :width => width, :height => height
+    pdf.text_box 'Adeudo', :at => [x+width-80, y-((height)*(self.student_charge.student_payments.count+1))], :width => width, :height => height
+    pdf.text_box "$#{total}.00", :at => [x+width, y-((height)*(self.student_charge.student_payments.count+1))], :width => width, :height => height
     pdf.text_box self.date.strftime('%d %b %Y'), :at => [x+(width*2), y-((height)*(self.student_charge.student_payments.count+1))], :width => width, :height => height
     pdf.render_file("#{@@people_url}#{self.student_charge.student.person.id}/student_charges/#{directory_date}/pago_#{self.id}.pdf")
   end

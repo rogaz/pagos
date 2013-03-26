@@ -1,6 +1,7 @@
+<%= link_to "<i class='icon-chevron-left'></i> Regresar".html_safe, people_charges_path(@patient_charge.patient.person), :class => "btn btn-primary" %>
 <div class="row-fluid">
   <div class="span7"><h3>Cargo de sesión</h3><h2><%= @patient_charge.patient.person.name %></h2></div>
-  <div class="span3"><%= link_to "Ver otros cargos", people_charges_path(@patient_charge.patient.person), :class => "btn btn-inverse" %></div>
+  <!--<div class="span3"><%= link_to "Ver otros cargos", people_charges_path(@patient_charge.patient.person), :class => "btn btn-inverse" %></div>-->
 </div>
 <br/>
 <div class="row-fluid">

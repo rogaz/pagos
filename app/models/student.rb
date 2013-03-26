@@ -1,5 +1,5 @@
 class Student < ActiveRecord::Base
-  attr_accessible :category_id, :person_id, :cost
+  attr_accessible :category_id, :person_id, :cost, :plan_id
 
   after_create :create_directory, :colegiatura_proporcional
   after_destroy :destroy_directory

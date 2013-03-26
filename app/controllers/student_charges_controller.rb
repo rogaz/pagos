@@ -3,7 +3,8 @@ class StudentChargesController < ApplicationController
   # GET /student_charges.json
   def index
     if params[:category_id].nil?
-      @student_charges_months = StudentCharge.find(:all, :order => "date DESC").group_by { |student_charge| student_charge.date.strftime("%B %Y") }
+      #@student_charges_months = StudentCharge.find(:all, :order => "date DESC").group_by { |student_charge| student_charge.date.strftime("%B %Y") }
+      @student_charges_months = StudentCharge.order('date DESC').group_by { |student_charge| student_charge.date.strftime("%B %Y") }
     else
       student_charges = Array.new
       @category = Category.find params[:category_id]
@@ -143,7 +144,7 @@ class StudentChargesController < ApplicationController
 
   def apply_surcharge
     @student_charge = StudentCharge.find params[:student_charge_id]
-    if @student_charge.surcharge == false and @student_charge.liquidated == "no"
+    if @student_charge.surcharge == false and @student_charge.liquidated == 'no'
       @student_charge.surcharge = true
       @student_charge.amount = (@student_charge.amount * 1.10)
       @student_charge.save
@@ -164,7 +165,7 @@ class StudentChargesController < ApplicationController
 
   def no_apply_surcharge
     @student_charge = StudentCharge.find params[:student_charge_id]
-    if @student_charge.surcharge == true and @student_charge.liquidated == "no"
+    if @student_charge.surcharge == true and @student_charge.liquidated == 'no'
       @student_charge.surcharge = false
       @student_charge.amount = @student_charge.original_amount
       @student_charge.save
@@ -186,6 +187,36 @@ class StudentChargesController < ApplicationController
   def download
     @student_charge = StudentCharge.find params[:id]
     send_file @student_charge.get_path
+  end
+
+  def generate_charges
+    dia_de_cargo = 1
+    fecha_actual = Time.now
+    charges_created = 0
+    unless fecha_actual.month == 12 or fecha_actual.month == 7
+      if fecha_actual.day >= dia_de_cargo and fecha_actual.day < 26
+        @students = Student.all
+        @students.each do |student|
+          if student.student_charges.where('extract(month from date) = ?', fecha_actual.month).empty?
+            meses = 'Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre'.split(' ')
+            mes = meses[Time.now.month-1]
+            @student_charge = StudentCharge.new
+            @student_charge.amount = student.cost
+            @student_charge.original_amount = student.cost
+            @student_charge.liquidated = 'no'
+            @student_charge.description = "Colegiatura #{Time.now.strftime("#{mes} %y")}"
+            @student_charge.date = Time.now
+            @student_charge.student_id = student.id
+            @student_charge.surcharge = false
+            @student_charge.save
+            charges_created += 1
+          end
+        end
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to people_path, :notice => "#{charges_created} cargos creados." }
+    end
   end
 
 end
