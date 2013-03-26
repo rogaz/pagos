@@ -6,6 +6,7 @@ class Student < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :person
+  belongs_to :plan
   has_many :student_charges
 
   validates :category_id, :presence => true

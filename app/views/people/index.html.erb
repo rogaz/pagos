@@ -5,6 +5,7 @@
   <tr>
     <th>Nombre</th>
     <th>Categoria</th>
+    <th>Plan</th>
     <th>Costo</th>
     <th>CENAAC</th>
     <th>Costo</th>
@@ -17,6 +18,7 @@
   <tr class="ClickableRow" href="<%= people_charges_path(person) %> ">
     <td><%= person.name %></td>
     <td><%= person.student.nil? ? "" : person.student.category.name %></td>
+    <td><%= person.student.nil? ? "" : person.student.plan.name %></td>
     <td><%= person.student.nil? ? "" : "$#{person.student.cost}.00" %></td>
     <td><% unless  person.patient.nil? %><i class="icon-ok"></i><% end %></td>
     <td><%= person.patient.nil? ? "" : "$#{person.patient.cost}.00" %></td>

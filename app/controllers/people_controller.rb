@@ -45,26 +45,33 @@ class PeopleController < ApplicationController
     correct_cenaac_cost = true
     escuelaocenaac = true
     categoria_seleccionada = true
+    plan_seleccionado = true
 
     escuelaocenaac = false if params[:escuela].nil? and params[:cenaac].nil?
 
     if params[:escuela] == "true"
       categoria_seleccionada = false if params[:category][:id] == ""
+      plan_seleccionado = false if params[:plan][:id] == ""
       correct_esc_cost = false if !params[:escuela_cost][/(^[\d]+$)/]
+      escuela_cost = params[:escuela_cost].to_i
+      correct_esc_cost = false if escuela_cost <= 0
     end
 
     if params[:cenaac] == "true"
       correct_cenaac_cost = false if !params[:cenaac_cost][/(^[\d]+$)/]
+      cenaac_cost = params[:cenaac_cost].to_i
+      correct_cenaac_cost = false if cenaac_cost <= 0
     end
 
     respond_to do |format|
-      if correct_esc_cost and escuelaocenaac and categoria_seleccionada and correct_cenaac_cost
+      if correct_esc_cost and escuelaocenaac and categoria_seleccionada and plan_seleccionado and correct_cenaac_cost
         @person.save
         if params[:escuela] == "true"
           @student = Student.new
           @student.cost = params[:escuela_cost]
           @student.person_id = @person.id
           @student.category_id = params[:category][:id]
+          @student.plan_id = params[:plan][:id]
           @student.save
         end
         if params[:cenaac] == "true"
@@ -80,9 +87,10 @@ class PeopleController < ApplicationController
         format.json { render json: @person, status: :created, location: @person }
       else
         flash[:notice] = "La persona debe estar en CENAAC o escuela" if !escuelaocenaac
+        flash[:notice] = "Debe seleccionar una plan de pago de escuela" if !plan_seleccionado
         flash[:notice] = "Debe seleccionar una categoria de escuela" if !categoria_seleccionada
-        flash[:notice] = "El campo de costo de colegiatura no debe estar vacio y solo acepta numeros" if !correct_esc_cost
-        flash[:notice] = "El campo de costo de sesion no debe estar vacio y solo acepta numeros" if !correct_cenaac_cost
+        flash[:notice] = "El campo de costo de colegiatura no debe estar vacio y solo acepta numeros mayores a 0" if !correct_esc_cost
+        flash[:notice] = "El campo de costo de sesion no debe estar vacio y solo acepta numeros mayores a 0" if !correct_cenaac_cost
         format.html { render action: "new" }
         format.json { render json: @person.errors, status: :unprocessable_entity }
       end

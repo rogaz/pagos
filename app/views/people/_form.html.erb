@@ -3,9 +3,11 @@
     if($('#escuela').is(':checked')){
       $("#escuela_cost").removeAttr('disabled');
       $("#category_id").removeAttr('disabled');
+      $("#plan_id").removeAttr('disabled');
     } else{
       $("#escuela_cost").attr('disabled', 'disabled');
       $("#category_id").attr('disabled', 'disabled');
+      $("#plan_id").attr('disabled', 'disabled');
     }
     if($('#cenaac').is(':checked'))
       $("#cenaac_cost").removeAttr('disabled');
@@ -16,9 +18,11 @@
       if($('#escuela').is(':checked')){
         $("#escuela_cost").removeAttr('disabled');
         $("#category_id").removeAttr('disabled');
+        $("#plan_id").removeAttr('disabled');
       } else{
         $("#escuela_cost").attr('disabled', 'disabled');
         $("#category_id").attr('disabled', 'disabled');
+        $("#plan_id").attr('disabled', 'disabled');
       }
     });
     $("#cenaac").click(function(){
@@ -60,6 +64,10 @@
       <div class="controls"><%= select(:category, :id, Category.find(:all, :conditions => ["name != 'CENAAC'"]).collect {|s| [s.name, s.id]}, {:prompt => "Seleccione categoria"}) %></div>
     </div>
     <div class="control-group">
+      <%= label_tag "plan", "Plan", :class => "control-label" %>
+      <div class="controls"><%= select(:plan, :id, Plan.order('name ASC').collect {|s| [s.name, s.id]}, {:prompt => 'Seleccione Plan'}) %></div>
+    </div>
+    <div class="control-group">
       <%= label_tag "escuela_cost", "Costo de Colegiatura", :class => "control-label" %>
       <div class="input-prepend input-append">
         <span class="add-on">$</span>
@@ -74,7 +82,11 @@
     </div>
     <div class="control-group">
       <%= label_tag "categoria", "Categoria", :class => "control-label" %>
-      <div class="controls"><%= select(:category, :id, Category.find(:all, :conditions => ["name != 'CENAAC'"]).collect {|s| [s.name, s.id]}, {:selected => @person.student.category_id}) %></div>
+      <div class="controls"><%= select(:plan, :id, Category.find(:all, :conditions => ["name != 'CENAAC'"]).collect {|s| [s.name, s.id]}, {:selected => @person.student.category_id}) %></div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "plan", "Plan", :class => "control-label" %>
+      <div class="controls"><%= select(:category, :id, Plan.order('name ASC').collect {|s| [s.name, s.id]}, {:selected => @person.student.plan_id}) %></div>
     </div>
     <div class="control-group">
       <%= label_tag "escuela_cost", "Costo de Colegiatura", :class => "control-label" %>
