@@ -9,12 +9,12 @@ class PatientPayment < ActiveRecord::Base
   @@people_url = "#{Rails.root}/pdfs/people/"
   # TODO: Si se elimina un pago, los demas archivos no serán válidos
   def get_path
-    directory_date = "#{self.date.strftime('%d-%m-%y')}-#{self.patient_charge.id}"
+    directory_date = "#{self.patient_charge.date.strftime('%d-%m-%y')}-#{self.patient_charge.id}"
     @@people_url + self.patient_charge.patient.person.id.to_s + "/patient_charges/#{directory_date}/pago_#{self.id.to_s}.pdf"
   end
 
   def generate_pdf
-    directory_date = "#{self.date.strftime('%d-%m-%y')}-#{self.patient_charge.id}"
+    directory_date = "#{self.patient_charge.date.strftime('%d-%m-%y')}-#{self.patient_charge.id}"
     pdf = Prawn::Document.new
     pdf.font_size(25)
     pdf.text "Centro a Atencion a las Alteraciones del Aprendizaje y la Comunicacion S.C.", :align => :center
@@ -60,7 +60,7 @@ class PatientPayment < ActiveRecord::Base
   end
 
   def destroy_file
-    directory_date = "#{self.date.strftime('%d-%m-%y')}-#{self.patient_charge.id}"
+    directory_date = "#{self.patient_charge.date.strftime('%d-%m-%y')}-#{self.patient_charge.id}"
     FileUtils.rm "#{@@people_url}#{self.patient_charge.patient.person.id}/patient_charges/#{directory_date}/pago_#{self.id}.pdf"
   end
 
