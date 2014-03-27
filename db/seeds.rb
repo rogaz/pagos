@@ -6,8 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-#Category.create({name: 'Kinder', description: 'Insituto de Educacion Preescolar Andres Osuna'})
-#Category.create({name: 'Primaria', description: 'Insituto de Educacion Integral Andres Osuna'})
-#Category.create({name: 'Secundaria', description: 'Secundaria Plan Abierto'})
-#Category.create({name: 'Preparatoria', description: 'Centro de Asesoria Andres Osuna'})
-#Category.create({name: 'CENAAC', description: 'Centro de Atencion a las Alteraciones del Aprendizaje y la Comunicacion S.C.'})
+Category.delete_all
+
+ActiveRecord::Base.connection.execute 'ALTER SEQUENCE categories_id_seq RESTART WITH 1;'
+
+Category.create({name: 'Kinder', description: 'Insituto de Educacion Preescolar Andres Osuna'})
+Category.create({name: 'Primaria', description: 'Insituto de Educacion Integral Andres Osuna'})
+Category.create({name: 'Secundaria', description: 'Secundaria Plan Abierto'})
+Category.create({name: 'Preparatoria', description: 'Centro de Asesoria Andres Osuna'})
+Category.create({name: 'CENAAC', description: 'Centro de Atencion a las Alteraciones del Aprendizaje y la Comunicacion S.C.'})
+
+p Category.all
+puts 'Categories created successfully'

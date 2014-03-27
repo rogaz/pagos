@@ -9,8 +9,8 @@ development:
   encoding: UTF-8
   database: pagos
   pool: 5
-  username: pagos
-  password: pagos
+  username: prueba
+  password: prueba
 #development:
 #  adapter: sqlite3
 #  database: db/development.sqlite3
