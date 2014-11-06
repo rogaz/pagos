@@ -18,3 +18,11 @@ Category.create({name: 'CENAAC', description: 'Centro de Atencion a las Alteraci
 
 p Category.all
 puts 'Categories created successfully'
+
+User.destroy_all
+ActiveRecord::Base.connection.execute 'ALTER SEQUENCE users_id_seq RESTART WITH 1;'
+
+User.create({name: 'Administrador', login: 'admin', password: '4dm1n', password_confirmation: '4dm1n'})
+
+p User.all
+puts 'Users created successfully'
